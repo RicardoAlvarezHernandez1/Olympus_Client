@@ -28,8 +28,8 @@ export const registerUser = async (
   return response.status;
 };
 
-export const loginuser = async (userName: string): Promise<Response> => {
-  const response = await fetch(`${API_URL}/users/${userName.trim()}`, {
+export const loginUser = async (userName: string): Promise<Response> => {
+  const response = await fetch(`${API_URL}/user/${userName.trim()}`, {
     method: "GET",
     headers: {
       Accept: "application/json",

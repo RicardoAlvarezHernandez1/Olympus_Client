@@ -11,6 +11,7 @@ import appColors from "../assets/styles/appColors";
 import { UserContext } from "../context/UserContext";
 import RegisterScreen from "../screens/RegisterScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
+import LoginScreen from "../screens/LoginScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -79,6 +80,20 @@ const CustomDrawer = () => {
           <Drawer.Screen
             name="Registration"
             component={RegisterScreen}
+            options={{
+              drawerIcon: () => (
+                <Ionicons
+                  name={"person-add-outline"}
+                  size={25}
+                  color={"black"}
+                />
+              ),
+            }}
+          />
+
+          <Drawer.Screen
+            name="Login"
+            component={LoginScreen}
             options={{
               drawerIcon: () => (
                 <Ionicons
