@@ -17,6 +17,8 @@ import MainScreen from "../screens/MainScreen";
 import Tab from "../screens/Tab";
 import CreateWorkOutScreen from "../screens/CreateWorkOutScreen";
 import MusclesScreen from "../screens/MusclesScreen";
+import ExerciseScreen from "../screens/Exercises";
+import WorkoutScreen from "../screens/WorkoutScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -94,8 +96,27 @@ const CustomDrawer = () => {
               }}
             />
             <Drawer.Screen
+              name="Exercises"
+              component={ExerciseScreen}
+              options={{
+                drawerLabel: () => null,
+                title: "",
+                drawerIcon: () => null,
+              }}
+            />
+            <Drawer.Screen
               name="Tabs"
               component={Tab}
+              options={{
+                drawerLabel: () => null,
+                title: "",
+                drawerIcon: () => null,
+              }}
+            />
+
+            <Drawer.Screen
+              name="Workout"
+              component={WorkoutScreen}
               options={{
                 drawerLabel: () => null,
                 title: "",

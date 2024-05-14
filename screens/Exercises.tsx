@@ -17,39 +17,49 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { UserContext } from "../context/UserContext";
-import { getUserRoutines } from "../services/OlympusClientServices";
+import {
+  addExerciseToRoutine,
+  getExercisesByMuscleZone,
+  getMusclesZones,
+  getUserRoutines,
+} from "../services/OlympusClientServices";
 import { RoutineInterface } from "../assets/interfaces/RoutineInterface";
+import { MuscleZoneInterface } from "../assets/interfaces/MuscleZoneInterface";
+import { MuscleContext } from "../context/MuscleContext";
+import { ExerciseInterface } from "../assets/interfaces/ExerciseInterface";
 import { RoutineContext } from "../context/RoutineContext";
 
-type WelcomeScreenProps = {
+type ExerciseScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
-const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
-  const [routines, setRoutines] = React.useState<RoutineInterface[]>([]);
-  const [id, setId] = React.useState(routines.length + 1);
-  const { userId } = React.useContext(UserContext);
-  const { setRoutineId } = React.useContext(RoutineContext);
-  const loadRoutines = async () => {
-    const recievedUsers = await getUserRoutines(userId);
-    if (recievedUsers != null) {
-      setRoutines(recievedUsers);
+const ExerciseScreen = ({ navigation }: ExerciseScreenProps) => {
+  const [exercises, setExercises] = React.useState<ExerciseInterface[]>([]);
+  const { muscleZoneId, setMuscleZoneId } = React.useContext(MuscleContext);
+  const { routineId } = React.useContext(RoutineContext);
+
+  const loadExercises = async () => {
+    const recievedExercises = await getExercisesByMuscleZone(muscleZoneId);
+    if (recievedExercises != null) {
+      setExercises(recievedExercises);
     }
   };
 
   React.useEffect(() => {
-    loadRoutines();
+    loadExercises();
   }, []);
 
-  const onclickButton = async (id: number) => {
-    setRoutineId(id);
-    navigation.navigate("CreateWorkout");
+  const onClickButton = (id: number) => {
+    addExerciseToRoutine(id, routineId)
+      .then((status) => {
+        if (status == 400) {
+          window.alert("ERROR");
+          return null;
+        } else {
+          window.alert("Registro exitoso");
+        }
+      })
+      .catch((err) => console.log(err));
   };
-
-  const onclickRoutine = async (id: number) => {
-    setRoutineId(id);
-    navigation.navigate("Workout");
-  };
-
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -59,19 +69,21 @@ const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
         <Text style={styles.welcomeTitle}>YOUR WORKOUTS</Text>
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
           <ScrollView>
-            {routines.map((routine) => (
+            {exercises.map((exercise) => (
               <TouchableOpacity
                 style={{ ...styles.touchable, ...styles.boxShadow }}
-                onPress={() => onclickRoutine(routine.routineId)}
+                onPress={() => onClickButton(exercise.exerciseId)}
               >
-                <Text style={styles.buttonContent}>{routine.routineName}</Text>
+                <Text style={styles.buttonContent}>
+                  {exercise.exerciseName}
+                </Text>
               </TouchableOpacity>
             ))}
             <TouchableOpacity
               style={styles.touchable}
-              onPress={() => onclickButton(id)}
+              onPress={() => navigation.navigate("Muscles")}
             >
-              <Text>Add new workout</Text>
+              <Text>Go Back</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
@@ -80,7 +92,7 @@ const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
   );
 };
 
-export default RoutineScreen;
+export default ExerciseScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {

@@ -5,15 +5,18 @@ import CustomDrawer from "./components/CustomDrawer";
 import appColors from "./assets/styles/appColors";
 import UserProvider from "./providers/UserProvider";
 import MuscleProvider from "./providers/MuscleProvider";
+import RoutineProvider from "./providers/RoutineProvider";
 
 export default function App() {
   return (
     <View style={styles.appContainer}>
       <UserProvider>
         <MuscleProvider>
-          <NavigationContainer>
-            <CustomDrawer></CustomDrawer>
-          </NavigationContainer>
+          <RoutineProvider>
+            <NavigationContainer>
+              <CustomDrawer></CustomDrawer>
+            </NavigationContainer>
+          </RoutineProvider>
         </MuscleProvider>
       </UserProvider>
     </View>

@@ -89,8 +89,6 @@ export const getMusclesZones = async (): Promise<MuscleZoneInterface[]> => {
   return routines;
 };
 
-// "/muscleZone/{muscleZoneId}/exercises"
-
 export const getExercisesByMuscleZone = async (
   muscleZoneId: number
 ): Promise<ExerciseInterface[]> => {
@@ -104,6 +102,39 @@ export const getExercisesByMuscleZone = async (
       },
     }
   );
+
+  const exercises: ExerciseInterface[] = await response.json();
+  return exercises;
+};
+
+export const addExerciseToRoutine = async (
+  exerciseId: number,
+  routineId: number
+): Promise<number> => {
+  const response = await fetch(
+    `${API_URL}/excercies/${exerciseId}/routines/${routineId}`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return response.status;
+};
+
+export const getExercisesByWorkout = async (
+  routineId: number
+): Promise<ExerciseInterface[]> => {
+  const response = await fetch(`${API_URL}/routines/${routineId}/exercises`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
 
   const exercises: ExerciseInterface[] = await response.json();
   return exercises;
