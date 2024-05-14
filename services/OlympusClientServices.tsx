@@ -1,5 +1,7 @@
 import { IpDirection } from "./IpDirection";
 import { RoutineInterface } from "../assets/interfaces/RoutineInterface";
+import { MuscleZoneInterface } from "../assets/interfaces/MuscleZoneInterface";
+import { ExerciseInterface } from "../assets/interfaces/ExerciseInterface";
 
 const API_URL = `http://${IpDirection()}:8082/olympus/v1`;
 const REGISTRATION_PATH = "/user";
@@ -72,4 +74,37 @@ export const newRoutine = async (
   });
 
   return response.status;
+};
+
+export const getMusclesZones = async (): Promise<MuscleZoneInterface[]> => {
+  const response = await fetch(`${API_URL}/muscle_zone`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+
+  const routines: MuscleZoneInterface[] = await response.json();
+  return routines;
+};
+
+// "/muscleZone/{muscleZoneId}/exercises"
+
+export const getExercisesByMuscleZone = async (
+  muscleZoneId: number
+): Promise<ExerciseInterface[]> => {
+  const response = await fetch(
+    `${API_URL}/muscleZone/${muscleZoneId}/exercises`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const exercises: ExerciseInterface[] = await response.json();
+  return exercises;
 };
