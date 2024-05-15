@@ -27,27 +27,33 @@ import { MuscleZoneInterface } from "../assets/interfaces/MuscleZoneInterface";
 import { MuscleContext } from "../context/MuscleContext";
 import { ExerciseInterface } from "../assets/interfaces/ExerciseInterface";
 import { RoutineContext } from "../context/RoutineContext";
+import { ExerciseContext } from "../context/ExerciseContext";
 
 type MuscleScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
 const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
   const [exercises, setExercises] = React.useState<ExerciseInterface[]>([]);
-  const { routineId } = React.useContext(RoutineContext);
-
+  const { routineId, routineName } = React.useContext(RoutineContext);
+  const { exerciseId, setExerciseId } = React.useContext(ExerciseContext);
   const loadExercises = async () => {
+    console.log("hola", routineId);
+
     const recievedExercises = await getExercisesByWorkout(routineId);
-    if (recievedExercises != null) {
+    console.log(recievedExercises);
+
+    if (recievedExercises) {
       setExercises(recievedExercises);
     }
   };
 
   React.useEffect(() => {
     loadExercises();
-  }, []);
+  }, [routineId]);
 
   const onClickButton = (id: number) => {
-    //setMuscleZoneId(id);
+    setExerciseId(id);
+    navigation.navigate("Exercise");
   };
 
   return (
@@ -56,11 +62,12 @@ const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
         source={require("./../assets/images/Fondo_Olympus_Client.png")}
         style={styles.image}
       >
-        <Text style={styles.welcomeTitle}>Your Workout</Text>
+        <Text style={styles.welcomeTitle}>Your Workout {routineName}</Text>
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
           <ScrollView>
             {exercises.map((exercise) => (
               <TouchableOpacity
+                onPress={() => onClickButton(exercise.exerciseId)}
                 key={exercise.exerciseId}
                 style={{ ...styles.touchable, ...styles.boxShadow }}
               >

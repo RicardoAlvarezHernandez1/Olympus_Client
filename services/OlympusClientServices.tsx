@@ -139,3 +139,18 @@ export const getExercisesByWorkout = async (
   const exercises: ExerciseInterface[] = await response.json();
   return exercises;
 };
+
+export const getExercisesById = async (
+  exerciseId: number
+): Promise<ExerciseInterface> => {
+  const response = await fetch(`${API_URL}/exercises/${exerciseId}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+
+  const exercise: ExerciseInterface = await response.json();
+  return exercise;
+};

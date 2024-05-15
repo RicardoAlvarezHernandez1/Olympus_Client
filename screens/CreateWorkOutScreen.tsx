@@ -11,6 +11,7 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../context/UserContext";
 import { newRoutine } from "../services/OlympusClientServices";
+import { RoutineContext } from "../context/RoutineContext";
 
 type WelcomeScreenProps = {
   navigation: NavigationProp<ParamListBase>;
@@ -18,6 +19,7 @@ type WelcomeScreenProps = {
 const CreateWorkOutScreen = ({ navigation }: WelcomeScreenProps) => {
   const [routineName, setRoutineName] = React.useState("");
   const { userId } = React.useContext(UserContext);
+  const { routineId, setRoutineId } = React.useContext(RoutineContext);
 
   const onClickButton = () => {
     if (routineName.trim() == "") {

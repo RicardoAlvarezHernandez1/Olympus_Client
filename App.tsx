@@ -6,6 +6,7 @@ import appColors from "./assets/styles/appColors";
 import UserProvider from "./providers/UserProvider";
 import MuscleProvider from "./providers/MuscleProvider";
 import RoutineProvider from "./providers/RoutineProvider";
+import ExerciseProvider from "./providers/ExerciseProvider";
 
 export default function App() {
   return (
@@ -13,9 +14,11 @@ export default function App() {
       <UserProvider>
         <MuscleProvider>
           <RoutineProvider>
-            <NavigationContainer>
-              <CustomDrawer></CustomDrawer>
-            </NavigationContainer>
+            <ExerciseProvider>
+              <NavigationContainer>
+                <CustomDrawer></CustomDrawer>
+              </NavigationContainer>
+            </ExerciseProvider>
           </RoutineProvider>
         </MuscleProvider>
       </UserProvider>

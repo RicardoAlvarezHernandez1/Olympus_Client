@@ -28,10 +28,11 @@ type WelcomeScreenProps = {
 };
 const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
   const [routines, setRoutines] = React.useState<RoutineInterface[]>([]);
-  const [id, setId] = React.useState(routines.length + 1);
   const { userId } = React.useContext(UserContext);
-  const { setRoutineId } = React.useContext(RoutineContext);
+  const { setRoutineId, setRoutineName } = React.useContext(RoutineContext);
   const loadRoutines = async () => {
+    console.log(userId);
+
     const recievedUsers = await getUserRoutines(userId);
     if (recievedUsers != null) {
       setRoutines(recievedUsers);
@@ -48,13 +49,15 @@ const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
     loadRoutines();
   }, []);
 
-  const onclickButton = async (id: number) => {
-    setRoutineId(id);
+  const onclickButton = async () => {
+    setRoutineId(routines.length + 1);
     navigation.navigate("CreateWorkout");
   };
 
-  const onclickRoutine = async (id: number) => {
+  const onclickRoutine = async (id: number, name: string) => {
     setRoutineId(id);
+    setRoutineName(name);
+
     navigation.navigate("Workout");
   };
 
@@ -68,7 +71,7 @@ const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
           <TouchableOpacity
             style={styles.touchable}
-            onPress={() => onclickButton(id)}
+            onPress={() => onclickButton()}
           >
             <Ionicons
               name="add-circle-outline"
@@ -81,7 +84,9 @@ const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
               <TouchableOpacity
                 key={routine.routineId}
                 style={{ ...styles.touchable, ...styles.boxShadow }}
-                onPress={() => onclickRoutine(routine.routineId)}
+                onPress={() =>
+                  onclickRoutine(routine.routineId, routine.routineName)
+                }
               >
                 <Text style={styles.buttonContent}>{routine.routineName}</Text>
               </TouchableOpacity>
@@ -154,6 +159,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 62,
     paddingVertical: 15,
     backgroundColor: AppColors.green,
+    alignItems: "center",
   },
   login: {
     marginTop: 10,

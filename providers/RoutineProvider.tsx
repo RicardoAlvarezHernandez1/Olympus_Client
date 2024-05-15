@@ -9,10 +9,10 @@ const RoutineProvider = (props: RoutineProviderProps) => {
   const { children } = props;
 
   const [routineName, setRoutine] = React.useState("");
-  const [routineId, setWorkoutId] = React.useState(0);
+  const [routineId, setRoutId] = React.useState(0);
 
   const setRoutineName = (username: string) => setRoutine(username);
-  const setRoutineId = (id: number) => setWorkoutId(id);
+  const setRoutineId = (id: number) => setRoutId(id);
 
   const defaultValue: RoutineContextType = {
     routineName,

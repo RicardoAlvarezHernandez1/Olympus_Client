@@ -1,84 +1,76 @@
 import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import React from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
 import AppColors from "../assets/styles/appColors";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import {
   addExerciseToRoutine,
+  getExercisesById,
   getExercisesByMuscleZone,
 } from "../services/OlympusClientServices";
 import { MuscleContext } from "../context/MuscleContext";
 import { ExerciseInterface } from "../assets/interfaces/ExerciseInterface";
 import { RoutineContext } from "../context/RoutineContext";
+import { ExerciseContext } from "../context/ExerciseContext";
 
 type ExerciseScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
-const ExerciseScreen = ({ navigation }: ExerciseScreenProps) => {
-  const [exercises, setExercises] = React.useState<ExerciseInterface[]>([]);
-  const { muscleZoneId, muscleName } = React.useContext(MuscleContext);
-  const { routineId } = React.useContext(RoutineContext);
+const ExercisesScreen = ({ navigation }: ExerciseScreenProps) => {
+  const { exerciseId } = React.useContext(ExerciseContext);
+  const { routineName } = React.useContext(RoutineContext);
+  const [exerciseName, setExerciseName] = React.useState("");
+  const [exerciseDescription, setExerciseDescription] = React.useState("");
+  const [urlImage, setUrlImage] = React.useState("");
 
-  const loadExercises = async () => {
-    console.log("musculo mostrado", muscleZoneId);
-    const receivedExercises = await getExercisesByMuscleZone(muscleZoneId);
-    if (receivedExercises) {
-      setExercises(receivedExercises);
-    }
+  const loadExercise = async () => {
+    getExercisesById(exerciseId).then((data) => {
+      setExerciseName(data.exerciseName);
+      setExerciseDescription(data.exerciseDescription);
+      setUrlImage(data.urlImage);
+    });
   };
 
   React.useEffect(() => {
-    loadExercises();
-  }, [muscleZoneId]);
+    loadExercise();
+  }, [exerciseId]);
 
-  const onClickButton = (id: number, name: string) => {
-    addExerciseToRoutine(id, routineId)
-      .then((status) => {
-        if (status == 400) {
-          window.alert("ERROR");
-          return null;
-        } else {
-          window.alert(`${name} succesfully added to your workout routine`);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
         source={require("./../assets/images/Fondo_Olympus_Client.png")}
         style={styles.image}
       >
-        <Text style={styles.welcomeTitle}>{muscleName} exercises</Text>
+        <Text style={styles.welcomeTitle}>{routineName}</Text>
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
-          <ScrollView>
-            {exercises.map((exercise) => (
-              <TouchableOpacity
-                key={exercise.exerciseId}
-                style={{ ...styles.touchable, ...styles.boxShadow }}
-                onPress={() =>
-                  onClickButton(exercise.exerciseId, exercise.exerciseName)
-                }
-              >
-                <Text style={styles.buttonContent}>
-                  {exercise.exerciseName}
-                </Text>
-              </TouchableOpacity>
-            ))}
-            <TouchableOpacity
-              style={styles.goBack}
-              onPress={() => navigation.navigate("Muscles")}
-            >
-              <Text style={styles.buttonContent}>Go Back</Text>
-            </TouchableOpacity>
-          </ScrollView>
+          <View style={styles.tittleContainer}>
+            <Ionicons
+              name={"arrow-undo-circle-outline"}
+              size={25}
+              color={"black"}
+              style={styles.icono}
+              onPress={() => navigation.navigate("Workout")}
+            />
+            <Text style={styles.tittle}>{exerciseName}</Text>
+          </View>
+          <View style={styles.imageContainer}>
+            <ImageBackground
+              style={styles.image}
+              source={require("./../assets/images/Fondo_Olympus_Client.png")}
+            ></ImageBackground>
+          </View>
+          <View>
+            <Text style={styles.description}>{exerciseDescription}</Text>
+          </View>
         </View>
       </ImageBackground>
     </View>
   );
 };
 
-export default ExerciseScreen;
+export default ExercisesScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -92,6 +84,16 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+  imageContainer: {
+    width: 200,
+    height: 150,
+  },
+  tittleContainer: {
+    flexDirection: "row",
+  },
+  icono: {
+    marginRight: 20,
+  },
   welcomeTitle: {
     fontWeight: "700",
     fontSize: 45,
@@ -99,16 +101,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontStyle: "italic",
     color: AppColors.white,
-    marginBottom: 60,
+    marginBottom: 10,
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowOffset: { width: 6, height: 6 },
     textShadowRadius: 5,
   },
   description: {
-    fontSize: 30,
-    fontWeight: "700",
+    fontSize: 15,
     textAlign: "center",
-    marginBottom: 30,
+    width: 200,
   },
   inputStyle: {
     width: 250,
@@ -119,9 +120,9 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     width: 300,
-    height: 500,
+    height: 580,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 30,
   },
@@ -129,6 +130,11 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "700",
     fontSize: 16,
+  },
+  tittle: {
+    color: "black",
+    fontWeight: "700",
+    fontSize: 18,
   },
   touchable: {
     marginTop: 30,
