@@ -32,7 +32,7 @@ const MusclesScreen = ({ navigation }: WelcomeScreenProps) => {
   const [muscleZones, setMuscleZones] = React.useState<MuscleZoneInterface[]>(
     []
   );
-  const { setMuscleZoneId } = React.useContext(MuscleContext);
+  const { setMuscleZoneId, setMuscleName } = React.useContext(MuscleContext);
 
   const loadMuscleZones = async () => {
     const recievedUsers = await getMusclesZones();
@@ -45,8 +45,9 @@ const MusclesScreen = ({ navigation }: WelcomeScreenProps) => {
     loadMuscleZones();
   }, []);
 
-  const onClickButton = (id: number) => {
+  const onClickButton = (id: number, name: string) => {
     setMuscleZoneId(id);
+    setMuscleName(name);
     navigation.navigate("Exercises");
   };
   return (
@@ -55,13 +56,16 @@ const MusclesScreen = ({ navigation }: WelcomeScreenProps) => {
         source={require("./../assets/images/Fondo_Olympus_Client.png")}
         style={styles.image}
       >
-        <Text style={styles.welcomeTitle}>YOUR WORKOUTS</Text>
+        <Text style={styles.welcomeTitle}>Choose a muscle zone</Text>
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
           <ScrollView>
             {muscleZones.map((muscleZone) => (
               <TouchableOpacity
+                key={muscleZone.muscleZoneId}
                 style={{ ...styles.touchable, ...styles.boxShadow }}
-                onPress={() => onClickButton(muscleZone.muscleZoneId)}
+                onPress={() =>
+                  onClickButton(muscleZone.muscleZoneId, muscleZone.muscleName)
+                }
               >
                 <Text style={styles.buttonContent}>
                   {muscleZone.muscleName}
@@ -69,10 +73,10 @@ const MusclesScreen = ({ navigation }: WelcomeScreenProps) => {
               </TouchableOpacity>
             ))}
             <TouchableOpacity
-              style={styles.touchable}
+              style={styles.goBack}
               onPress={() => navigation.navigate("CreateWorkout")}
             >
-              <Text>Go Back</Text>
+              <Text style={styles.buttonContent}>Go Back</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
@@ -131,6 +135,7 @@ const styles = StyleSheet.create({
   buttonContent: {
     color: "black",
     fontWeight: "700",
+    fontSize: 16,
   },
   touchable: {
     marginTop: 30,
@@ -138,9 +143,22 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderWidth: 2,
     borderRadius: 15,
-    paddingHorizontal: 82,
+    paddingHorizontal: 62,
     paddingVertical: 15,
     backgroundColor: AppColors.green,
+    alignContent: "center",
+  },
+  goBack: {
+    marginTop: 30,
+    marginBottom: 15,
+    borderColor: "white",
+    borderWidth: 2,
+    borderRadius: 15,
+    paddingVertical: 10,
+    backgroundColor: AppColors.darkGreen,
+    alignItems: "center",
+    alignSelf: "center",
+    width: 100,
   },
   login: {
     marginTop: 10,

@@ -1,30 +1,12 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  Image,
-  TextInput,
-} from "react-native";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import React from "react";
 import AppColors from "../assets/styles/appColors";
-import {
-  NavigationContainer,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { Ionicons } from "@expo/vector-icons";
-import { UserContext } from "../context/UserContext";
 import {
   addExerciseToRoutine,
   getExercisesByMuscleZone,
-  getMusclesZones,
-  getUserRoutines,
 } from "../services/OlympusClientServices";
-import { RoutineInterface } from "../assets/interfaces/RoutineInterface";
-import { MuscleZoneInterface } from "../assets/interfaces/MuscleZoneInterface";
 import { MuscleContext } from "../context/MuscleContext";
 import { ExerciseInterface } from "../assets/interfaces/ExerciseInterface";
 import { RoutineContext } from "../context/RoutineContext";
@@ -34,7 +16,8 @@ type ExerciseScreenProps = {
 };
 const ExerciseScreen = ({ navigation }: ExerciseScreenProps) => {
   const [exercises, setExercises] = React.useState<ExerciseInterface[]>([]);
-  const { muscleZoneId, setMuscleZoneId } = React.useContext(MuscleContext);
+  const { muscleZoneId, muscleName, setMuscleZoneId } =
+    React.useContext(MuscleContext);
   const { routineId } = React.useContext(RoutineContext);
 
   const loadExercises = async () => {
@@ -48,14 +31,14 @@ const ExerciseScreen = ({ navigation }: ExerciseScreenProps) => {
     loadExercises();
   }, []);
 
-  const onClickButton = (id: number) => {
+  const onClickButton = (id: number, name: string) => {
     addExerciseToRoutine(id, routineId)
       .then((status) => {
         if (status == 400) {
           window.alert("ERROR");
           return null;
         } else {
-          window.alert("Registro exitoso");
+          window.alert(`${name} succesfully added to your workout routine`);
         }
       })
       .catch((err) => console.log(err));
@@ -66,13 +49,16 @@ const ExerciseScreen = ({ navigation }: ExerciseScreenProps) => {
         source={require("./../assets/images/Fondo_Olympus_Client.png")}
         style={styles.image}
       >
-        <Text style={styles.welcomeTitle}>YOUR WORKOUTS</Text>
+        <Text style={styles.welcomeTitle}>{muscleName} exercises</Text>
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
           <ScrollView>
             {exercises.map((exercise) => (
               <TouchableOpacity
+                key={exercise.exerciseId}
                 style={{ ...styles.touchable, ...styles.boxShadow }}
-                onPress={() => onClickButton(exercise.exerciseId)}
+                onPress={() =>
+                  onClickButton(exercise.exerciseId, exercise.exerciseName)
+                }
               >
                 <Text style={styles.buttonContent}>
                   {exercise.exerciseName}
@@ -80,10 +66,10 @@ const ExerciseScreen = ({ navigation }: ExerciseScreenProps) => {
               </TouchableOpacity>
             ))}
             <TouchableOpacity
-              style={styles.touchable}
+              style={styles.goBack}
               onPress={() => navigation.navigate("Muscles")}
             >
-              <Text>Go Back</Text>
+              <Text style={styles.buttonContent}>Go Back</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
@@ -142,6 +128,7 @@ const styles = StyleSheet.create({
   buttonContent: {
     color: "black",
     fontWeight: "700",
+    fontSize: 16,
   },
   touchable: {
     marginTop: 30,
@@ -149,9 +136,22 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderWidth: 2,
     borderRadius: 15,
-    paddingHorizontal: 82,
+    paddingHorizontal: 22,
     paddingVertical: 15,
     backgroundColor: AppColors.green,
+    alignItems: "center",
+  },
+  goBack: {
+    marginTop: 30,
+    marginBottom: 15,
+    borderColor: "white",
+    borderWidth: 2,
+    borderRadius: 15,
+    paddingVertical: 10,
+    backgroundColor: AppColors.darkGreen,
+    alignItems: "center",
+    alignSelf: "center",
+    width: 100,
   },
   login: {
     marginTop: 10,

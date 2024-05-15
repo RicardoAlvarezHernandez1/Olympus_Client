@@ -2,10 +2,8 @@ import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import React from "react";
 import AppColors from "../assets/styles/appColors";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../context/UserContext";
-import { getUserRoutines } from "../services/OlympusClientServices";
-import { RoutineInterface } from "../assets/interfaces/RoutineInterface";
 import appColors from "../assets/styles/appColors";
 
 type MainScreenProps = {
@@ -13,13 +11,15 @@ type MainScreenProps = {
 };
 
 const MainScreen = ({ navigation }: MainScreenProps) => {
+  const { user } = React.useContext(UserContext);
+
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
         source={require("./../assets/images/Fondo_Olympus_Client.png")}
         style={styles.image}
       >
-        <Text style={styles.welcomeTitle}>WELCOME</Text>
+        <Text style={styles.welcomeTitle}>Welcome {user}</Text>
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
           <TouchableOpacity
             style={styles.touchable}

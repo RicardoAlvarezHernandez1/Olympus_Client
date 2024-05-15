@@ -3,26 +3,20 @@ import {
   Text,
   View,
   ImageBackground,
-  Image,
   TextInput,
 } from "react-native";
 import React from "react";
 import AppColors from "../assets/styles/appColors";
-import {
-  NavigationContainer,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../context/UserContext";
-import { loginUser, newRoutine } from "../services/OlympusClientServices";
+import { newRoutine } from "../services/OlympusClientServices";
 
 type WelcomeScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
 const CreateWorkOutScreen = ({ navigation }: WelcomeScreenProps) => {
   const [routineName, setRoutineName] = React.useState("");
-  const { setId } = React.useContext(UserContext);
   const { userId } = React.useContext(UserContext);
 
   const onClickButton = () => {
@@ -35,7 +29,6 @@ const CreateWorkOutScreen = ({ navigation }: WelcomeScreenProps) => {
             window.alert("ERROR");
             return null;
           } else {
-            window.alert("Registro exitoso");
             navigation.navigate("Muscles");
           }
         })
@@ -61,6 +54,12 @@ const CreateWorkOutScreen = ({ navigation }: WelcomeScreenProps) => {
             onPress={() => onClickButton()}
           >
             <Text style={styles.buttonContent}>Create</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ ...styles.touchable, ...styles.boxShadow }}
+            onPress={() => navigation.navigate("Workouts")}
+          >
+            <Text style={styles.buttonContent}>Go Back</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -94,6 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppColors.limeGreen,
     borderRadius: 10,
     marginTop: 20,
+    paddingLeft: 10,
   },
   welcomeContainer: {
     width: 300,
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
   buttonContent: {
     color: "black",
     fontWeight: "700",
+    fontSize: 16,
   },
   touchable: {
     marginTop: 30,

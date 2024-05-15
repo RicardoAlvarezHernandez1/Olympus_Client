@@ -22,9 +22,8 @@ type WelcomeScreenProps = {
 };
 const LoginScreen = ({ navigation }: WelcomeScreenProps) => {
   const { isLogged, toggleIsLogged } = React.useContext(UserContext);
-  const { user, setUserName } = React.useContext(UserContext);
+  const { user, setUserName, setId } = React.useContext(UserContext);
   const [userPassword, setuserPassword] = React.useState("");
-  const { setId } = React.useContext(UserContext);
 
   function setUser(text: string) {
     setUserName(text);
@@ -55,8 +54,8 @@ const LoginScreen = ({ navigation }: WelcomeScreenProps) => {
           const password = data.password;
           if (password === password) {
             setId(data.userId);
+            setUserName(data.userName);
             toggleIsLogged();
-            navigation.navigate("Routines");
           } else {
             window.alert("El usuario o la contraseña son incorrectos");
           }
@@ -126,6 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppColors.limeGreen,
     borderRadius: 10,
     marginTop: 20,
+    paddingLeft: 10,
   },
   welcomeContainer: {
     width: 300,

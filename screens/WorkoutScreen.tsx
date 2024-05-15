@@ -37,9 +37,6 @@ const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
 
   const loadExercises = async () => {
     const recievedExercises = await getExercisesByWorkout(routineId);
-    console.log(recievedExercises);
-    console.log(routineId);
-
     if (recievedExercises != null) {
       setExercises(recievedExercises);
     }
@@ -59,11 +56,12 @@ const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
         source={require("./../assets/images/Fondo_Olympus_Client.png")}
         style={styles.image}
       >
-        <Text style={styles.welcomeTitle}>YOUR WORKOUTS</Text>
+        <Text style={styles.welcomeTitle}>Your Workout</Text>
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
           <ScrollView>
             {exercises.map((exercise) => (
               <TouchableOpacity
+                key={exercise.exerciseId}
                 style={{ ...styles.touchable, ...styles.boxShadow }}
               >
                 <Text style={styles.buttonContent}>
@@ -72,10 +70,10 @@ const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
               </TouchableOpacity>
             ))}
             <TouchableOpacity
-              style={styles.touchable}
-              onPress={() => navigation.navigate("CreateWorkout")}
+              style={styles.goBack}
+              onPress={() => navigation.navigate("Workouts")}
             >
-              <Text>Go Back</Text>
+              <Text style={styles.buttonContent}>Go Back</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
@@ -135,15 +133,28 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "700",
   },
+  goBack: {
+    marginTop: 30,
+    marginBottom: 15,
+    borderColor: "white",
+    borderWidth: 2,
+    borderRadius: 15,
+    paddingVertical: 10,
+    backgroundColor: AppColors.darkGreen,
+    alignItems: "center",
+    alignSelf: "center",
+    width: 100,
+  },
   touchable: {
     marginTop: 30,
     marginBottom: 15,
     borderColor: "white",
     borderWidth: 2,
     borderRadius: 15,
-    paddingHorizontal: 82,
+    paddingHorizontal: 22,
     paddingVertical: 15,
     backgroundColor: AppColors.green,
+    alignItems: "center",
   },
   login: {
     marginTop: 10,

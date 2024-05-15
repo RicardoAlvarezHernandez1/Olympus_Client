@@ -9,8 +9,8 @@ const MuscleProvider = (props: MuscleProviderProps) => {
   const { children } = props;
 
   const [muscleName, setMuscle] = React.useState("");
-
   const [muscleZoneId, setMuscleId] = React.useState(0);
+
   const setMuscleName = (username: string) => setMuscle(username);
   const setMuscleZoneId = (id: number) => setMuscleId(id);
 

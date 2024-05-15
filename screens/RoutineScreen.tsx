@@ -6,7 +6,8 @@ import {
   Image,
   TextInput,
 } from "react-native";
-import React from "react";
+import React, { useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import AppColors from "../assets/styles/appColors";
 import {
   NavigationContainer,
@@ -20,6 +21,7 @@ import { UserContext } from "../context/UserContext";
 import { getUserRoutines } from "../services/OlympusClientServices";
 import { RoutineInterface } from "../assets/interfaces/RoutineInterface";
 import { RoutineContext } from "../context/RoutineContext";
+import appColors from "../assets/styles/appColors";
 
 type WelcomeScreenProps = {
   navigation: NavigationProp<ParamListBase>;
@@ -35,6 +37,12 @@ const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
       setRoutines(recievedUsers);
     }
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      loadRoutines();
+    }, [])
+  );
 
   React.useEffect(() => {
     loadRoutines();
@@ -58,21 +66,26 @@ const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
       >
         <Text style={styles.welcomeTitle}>YOUR WORKOUTS</Text>
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
+          <TouchableOpacity
+            style={styles.touchable}
+            onPress={() => onclickButton(id)}
+          >
+            <Ionicons
+              name="add-circle-outline"
+              size={30}
+              color={appColors.white}
+            />
+          </TouchableOpacity>
           <ScrollView>
             {routines.map((routine) => (
               <TouchableOpacity
+                key={routine.routineId}
                 style={{ ...styles.touchable, ...styles.boxShadow }}
                 onPress={() => onclickRoutine(routine.routineId)}
               >
                 <Text style={styles.buttonContent}>{routine.routineName}</Text>
               </TouchableOpacity>
             ))}
-            <TouchableOpacity
-              style={styles.touchable}
-              onPress={() => onclickButton(id)}
-            >
-              <Text>Add new workout</Text>
-            </TouchableOpacity>
           </ScrollView>
         </View>
       </ImageBackground>
@@ -130,6 +143,7 @@ const styles = StyleSheet.create({
   buttonContent: {
     color: "black",
     fontWeight: "700",
+    fontSize: 16,
   },
   touchable: {
     marginTop: 30,
@@ -137,7 +151,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderWidth: 2,
     borderRadius: 15,
-    paddingHorizontal: 82,
+    paddingHorizontal: 62,
     paddingVertical: 15,
     backgroundColor: AppColors.green,
   },

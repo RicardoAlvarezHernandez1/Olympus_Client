@@ -55,11 +55,7 @@ const CustomDrawer = () => {
               component={MainScreen}
               options={{
                 drawerIcon: () => (
-                  <Ionicons
-                    name={"person-add-outline"}
-                    size={25}
-                    color={"black"}
-                  />
+                  <Ionicons name={"home-outline"} size={25} color={"black"} />
                 ),
               }}
             />
@@ -69,7 +65,7 @@ const CustomDrawer = () => {
               options={{
                 drawerIcon: () => (
                   <Ionicons
-                    name={"person-add-outline"}
+                    name={"barbell-outline"}
                     size={25}
                     color={"black"}
                   />
@@ -135,11 +131,7 @@ const CustomDrawer = () => {
             component={WelcomeScreen}
             options={{
               drawerIcon: () => (
-                <Ionicons
-                  name={"person-add-outline"}
-                  size={25}
-                  color={"black"}
-                />
+                <Ionicons name={"home-outline"} size={25} color={"black"} />
               ),
             }}
           />
@@ -163,11 +155,7 @@ const CustomDrawer = () => {
             component={LoginScreen}
             options={{
               drawerIcon: () => (
-                <Ionicons
-                  name={"person-add-outline"}
-                  size={25}
-                  color={"black"}
-                />
+                <Ionicons name={"arrow-redo-sharp"} size={25} color={"black"} />
               ),
             }}
           />
