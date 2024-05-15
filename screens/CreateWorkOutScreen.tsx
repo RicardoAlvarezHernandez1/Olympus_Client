@@ -3,67 +3,38 @@ import {
   Text,
   View,
   ImageBackground,
-  Image,
   TextInput,
 } from "react-native";
 import React from "react";
 import AppColors from "../assets/styles/appColors";
-import {
-  NavigationContainer,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../context/UserContext";
-import { loginUser } from "../services/OlympusClientServices";
+import { newRoutine } from "../services/OlympusClientServices";
+import { RoutineContext } from "../context/RoutineContext";
 
 type WelcomeScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
-const LoginScreen = ({ navigation }: WelcomeScreenProps) => {
-  const { isLogged, toggleIsLogged } = React.useContext(UserContext);
-  const { user, setUserName, setId } = React.useContext(UserContext);
-  const [userPassword, setuserPassword] = React.useState("");
-
-  function setUser(text: string) {
-    setUserName(text);
-  }
-
-  function setPassword(text: string) {
-    setuserPassword(text);
-  }
+const CreateWorkOutScreen = ({ navigation }: WelcomeScreenProps) => {
+  const [routineName, setRoutineName] = React.useState("");
+  const { userId } = React.useContext(UserContext);
+  const { routineId, setRoutineId } = React.useContext(RoutineContext);
 
   const onClickButton = () => {
-    const userName: string = user;
-    const password: string = userPassword;
-    if (userName.trim() == "" || password.trim() == "") {
+    if (routineName.trim() == "") {
       window.alert("Por favor , rellene los campos necesarios");
     } else {
-      loginUser(userName)
-        .then((response) => {
-          if (!response.ok) {
-            window.alert("El usuario o la contraseña son incorrectos");
+      newRoutine(userId, routineName)
+        .then((status) => {
+          if (status == 400) {
+            window.alert("ERROR");
             return null;
-          }
-          return response.json();
-        })
-        .then((data) => {
-          if (!data) {
-            return;
-          }
-          const password = data.password;
-          if (password === password) {
-            setId(data.userId);
-            setUserName(data.userName);
-            toggleIsLogged();
           } else {
-            window.alert("El usuario o la contraseña son incorrectos");
+            navigation.navigate("Muscles");
           }
         })
-        .catch((error) => {
-          console.error("Error en la solicitud: ", error);
-          window.alert("Usuario no registrado");
-        });
+        .catch((err) => console.log(err));
     }
   };
 
@@ -74,24 +45,23 @@ const LoginScreen = ({ navigation }: WelcomeScreenProps) => {
         style={styles.image}
       >
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
-          <Text style={styles.description}>You already have an account?</Text>
-          <Text style={styles.description}>Log in below</Text>
+          <Text style={styles.description}>Name</Text>
           <TextInput
-            onChangeText={(text) => setUser(text)}
-            placeholder="Your user name..."
+            onChangeText={(text) => setRoutineName(text)}
+            placeholder="Your routine name..."
             style={styles.inputStyle}
-          ></TextInput>
-          <TextInput
-            onChangeText={(text) => setPassword(text)}
-            placeholder="Password..."
-            style={styles.inputStyle}
-            secureTextEntry={true}
           ></TextInput>
           <TouchableOpacity
             style={{ ...styles.touchable, ...styles.boxShadow }}
             onPress={() => onClickButton()}
           >
-            <Text style={styles.buttonContent}>LOGIN</Text>
+            <Text style={styles.buttonContent}>Create</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ ...styles.touchable, ...styles.boxShadow }}
+            onPress={() => navigation.navigate("Workouts")}
+          >
+            <Text style={styles.buttonContent}>Go Back</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -99,7 +69,7 @@ const LoginScreen = ({ navigation }: WelcomeScreenProps) => {
   );
 };
 
-export default LoginScreen;
+export default CreateWorkOutScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -137,6 +107,7 @@ const styles = StyleSheet.create({
   buttonContent: {
     color: "black",
     fontWeight: "700",
+    fontSize: 16,
   },
   touchable: {
     marginTop: 30,

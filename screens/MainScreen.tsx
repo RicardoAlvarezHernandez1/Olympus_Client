@@ -3,31 +3,45 @@ import React from "react";
 import AppColors from "../assets/styles/appColors";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { UserContext } from "../context/UserContext";
+import appColors from "../assets/styles/appColors";
 
-type WelcomeScreenProps = {
+type MainScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
-const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
+
+const MainScreen = ({ navigation }: MainScreenProps) => {
+  const { user } = React.useContext(UserContext);
+
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
         source={require("./../assets/images/Fondo_Olympus_Client.png")}
         style={styles.image}
       >
-        <Text style={styles.welcomeTitle}>WELCOME TO OLYMPUS</Text>
+        <Text style={styles.welcomeTitle}>Welcome {user}</Text>
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
-          <Text style={styles.description}>JOIN US !</Text>
           <TouchableOpacity
-            style={{ ...styles.touchable, ...styles.boxShadow }}
-            onPress={() => navigation.navigate("Login")}
+            style={styles.touchable}
+            onPress={() => navigation.navigate("Achievements")}
           >
-            <Text style={styles.buttonContent}>Log in</Text>
+            <ImageBackground
+              style={styles.image}
+              source={require("../assets/images/Fondo_Olympus_Client.png")}
+            >
+              <Text style={styles.buttonText}>Your Achievements</Text>
+            </ImageBackground>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{ ...styles.login, ...styles.boxShadow }}
-            onPress={() => navigation.navigate("Registration")}
+            style={styles.touchable}
+            onPress={() => navigation.navigate("Workouts")}
           >
-            <Text style={styles.buttonContent}>I dont't have an account</Text>
+            <ImageBackground
+              style={styles.image}
+              source={require("../assets/images/Fondo_Olympus_Client.png")}
+            >
+              <Text style={styles.buttonText}>Your Workouts</Text>
+            </ImageBackground>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -35,7 +49,7 @@ const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
   );
 };
 
-export default WelcomeScreen;
+export default MainScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -56,56 +70,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontStyle: "italic",
     color: AppColors.white,
-    marginTop: -120,
+    marginTop: -80,
     marginBottom: 60,
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowOffset: { width: 6, height: 6 },
     textShadowRadius: 5,
   },
-  description: {
-    fontSize: 30,
-    fontWeight: "700",
-    textAlign: "center",
-    marginBottom: 30,
-  },
-  inputStyle: {
-    width: 250,
-    height: 50,
-    backgroundColor: AppColors.limeGreen,
-    borderRadius: 10,
-    marginTop: 20,
-  },
   welcomeContainer: {
     width: 300,
-    height: 325,
+    height: 500,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 30,
   },
-  buttonContent: {
-    color: "black",
+  buttonText: {
+    color: appColors.white,
     fontWeight: "700",
-  },
-  touchable: {
-    marginTop: 30,
-    marginBottom: 15,
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 15,
-    paddingHorizontal: 82,
-    paddingVertical: 15,
-    backgroundColor: AppColors.green,
-  },
-  login: {
-    marginTop: 10,
-    marginBottom: 15,
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 15,
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    backgroundColor: AppColors.darkGreen,
+    fontSize: 20,
   },
   boxShadow: {
     shadowColor: "black",
@@ -116,5 +98,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 16,
+  },
+  touchable: {
+    height: 150,
+    width: 240,
   },
 });

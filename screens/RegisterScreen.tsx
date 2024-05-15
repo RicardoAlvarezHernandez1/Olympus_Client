@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppColors.limeGreen,
     borderRadius: 10,
     marginTop: 20,
+    paddingLeft: 10,
   },
   welcomeContainer: {
     width: 300,

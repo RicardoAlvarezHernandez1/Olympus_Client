@@ -5,6 +5,8 @@ type UserContextType = {
   user: string;
   setUserName: Function;
   toggleIsLogged: Function;
+  userId: number;
+  setId: Function;
 };
 
 const UserContext = React.createContext({} as UserContextType);

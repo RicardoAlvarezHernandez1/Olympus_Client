@@ -9,17 +9,19 @@ const UserProvider = (props: UserProviderProps) => {
   const { children } = props;
 
   const [user, setUser] = React.useState("");
-
-  const setUserName = (username: string) => setUser(username);
-
+  const [userId, setUserId] = React.useState(0);
   const [isLogged, setisLogged] = React.useState(false);
 
+  const setUserName = (username: string) => setUser(username);
+  const setId = (id: number) => setUserId(id);
   const toggleIsLogged = () => setisLogged(!isLogged);
 
   const defaultValue: UserContextType = {
     user,
+    userId,
     isLogged,
     setUserName,
+    setId,
     toggleIsLogged,
   };
 
