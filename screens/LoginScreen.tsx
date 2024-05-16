@@ -23,23 +23,20 @@ type WelcomeScreenProps = {
 const LoginScreen = ({ navigation }: WelcomeScreenProps) => {
   const { isLogged, toggleIsLogged } = React.useContext(UserContext);
   const { user, setUserName, setId } = React.useContext(UserContext);
+  const [mail, setMail] = React.useState("");
   const [userPassword, setuserPassword] = React.useState("");
-
-  function setUser(text: string) {
-    setUserName(text);
-  }
 
   function setPassword(text: string) {
     setuserPassword(text);
   }
 
   const onClickButton = () => {
-    const userName: string = user;
+    const email: string = mail;
     const password: string = userPassword;
-    if (userName.trim() == "" || password.trim() == "") {
+    if (email.trim() == "" || password.trim() == "") {
       window.alert("Por favor , rellene los campos necesarios");
     } else {
-      loginUser(userName)
+      loginUser(email, password)
         .then((response) => {
           if (!response.ok) {
             window.alert("El usuario o la contraseña son incorrectos");
@@ -51,8 +48,8 @@ const LoginScreen = ({ navigation }: WelcomeScreenProps) => {
           if (!data) {
             return;
           }
-          const password = data.password;
-          if (password === password) {
+
+          if (data.mailAndPasswordAreCorrect == true) {
             setId(data.userId);
             setUserName(data.userName);
             toggleIsLogged();
@@ -77,12 +74,12 @@ const LoginScreen = ({ navigation }: WelcomeScreenProps) => {
           <Text style={styles.description}>You already have an account?</Text>
           <Text style={styles.description}>Log in below</Text>
           <TextInput
-            onChangeText={(text) => setUser(text)}
-            placeholder="Your user name..."
+            onChangeText={(text) => setMail(text)}
+            placeholder="Your email address..."
             style={styles.inputStyle}
           ></TextInput>
           <TextInput
-            onChangeText={(text) => setPassword(text)}
+            onChangeText={(text) => setuserPassword(text)}
             placeholder="Password..."
             style={styles.inputStyle}
             secureTextEntry={true}

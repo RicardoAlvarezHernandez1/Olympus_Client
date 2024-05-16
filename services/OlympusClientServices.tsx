@@ -31,13 +31,20 @@ export const registerUser = async (
   return response.status;
 };
 
-export const loginUser = async (userName: string): Promise<Response> => {
-  const response = await fetch(`${API_URL}/user/${userName.trim()}`, {
-    method: "GET",
+export const loginUser = async (
+  userMail: string,
+  userPassword: string
+): Promise<Response> => {
+  const response = await fetch(`${API_URL}/user/verifyUser`, {
+    method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({
+      userMail: `${userMail}`,
+      userPassword: `${userPassword}`,
+    }),
   });
 
   return response;
