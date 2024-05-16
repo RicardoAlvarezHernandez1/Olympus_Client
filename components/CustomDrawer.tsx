@@ -20,6 +20,7 @@ import MusclesScreen from "../screens/MusclesScreen";
 import ExerciseScreen from "../screens/Exercises";
 import WorkoutScreen from "../screens/WorkoutScreen";
 import ExercisesScreen from "../screens/ExercisesScreen";
+import NewsScreen from "../screens/NewsScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -53,7 +54,7 @@ const CustomDrawer = () => {
           >
             <Drawer.Screen
               name="Main"
-              component={MainScreen}
+              component={Tab}
               options={{
                 drawerIcon: () => (
                   <Ionicons name={"home-outline"} size={25} color={"black"} />
@@ -73,59 +74,52 @@ const CustomDrawer = () => {
                 ),
               }}
             />
-
+            <Drawer.Screen
+              name="News"
+              component={NewsScreen}
+              options={{
+                drawerIcon: () => (
+                  <Ionicons
+                    name={"newspaper-outline"}
+                    size={25}
+                    color={"black"}
+                  />
+                ),
+              }}
+            />
             <Drawer.Screen
               name="CreateWorkout"
               component={CreateWorkOutScreen}
               options={{
-                drawerLabel: () => null,
-                title: "",
-                drawerIcon: () => null,
+                drawerItemStyle: { height: 0 },
               }}
             />
             <Drawer.Screen
               name="Muscles"
               component={MusclesScreen}
               options={{
-                drawerLabel: () => null,
-                title: "",
-                drawerIcon: () => null,
+                drawerItemStyle: { height: 0 },
               }}
             />
             <Drawer.Screen
               name="Exercises"
               component={ExerciseScreen}
               options={{
-                drawerLabel: () => null,
-                title: "",
-                drawerIcon: () => null,
+                drawerItemStyle: { height: 0 },
               }}
             />
             <Drawer.Screen
               name="Workout"
               component={WorkoutScreen}
               options={{
-                drawerLabel: () => null,
-                title: "",
-                drawerIcon: () => null,
+                drawerItemStyle: { height: 0 },
               }}
             />
             <Drawer.Screen
               name="Exercise"
               component={ExercisesScreen}
               options={{
-                drawerLabel: () => null,
-                title: "",
-                drawerIcon: () => null,
-              }}
-            />
-            <Drawer.Screen
-              name="Tabs"
-              component={Tab}
-              options={{
-                drawerLabel: () => null,
-                title: "",
-                drawerIcon: () => null,
+                drawerItemStyle: { height: 0 },
               }}
             />
           </Drawer.Navigator>

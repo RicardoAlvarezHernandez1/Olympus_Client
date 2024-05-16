@@ -16,19 +16,19 @@ const Body = () => {
   const HomeTabOptions = (): BottomTabNavigationOptions => {
     return {
       tabBarIcon: () => (
-        <Ionicons
-          name={"file-tray-full"}
-          size={30}
-          color={appColors.greenishWhite}
-        />
+        <Ionicons name={"home-outline"} size={30} color={appColors.darkGreen} />
       ),
     };
   };
 
-  const QRTabOptions = (): BottomTabNavigationOptions => {
+  const RoutinesTabOptions = (): BottomTabNavigationOptions => {
     return {
       tabBarIcon: () => (
-        <Ionicons name={"logo-github"} size={30} color={appColors.green} />
+        <Ionicons
+          name={"barbell-outline"}
+          size={30}
+          color={appColors.darkGreen}
+        />
       ),
     };
   };
@@ -38,7 +38,7 @@ const Body = () => {
         <Ionicons
           name={"newspaper-outline"}
           size={30}
-          color={appColors.green}
+          color={appColors.darkGreen}
         />
       ),
     };
@@ -47,7 +47,7 @@ const Body = () => {
   const tabNavigatorScreenOptions: BottomTabNavigationOptions = {
     headerShown: false,
     tabBarInactiveTintColor: appColors.darkGreen,
-    tabBarActiveTintColor: appColors.darkGreen,
+    tabBarActiveTintColor: appColors.greenishWhite,
     tabBarShowLabel: false,
     tabBarStyle: {
       backgroundColor: appColors.black,
@@ -63,9 +63,9 @@ const Body = () => {
           options={HomeTabOptions}
         />
         <Tab.Screen
-          name="QR"
+          name="Routines"
           component={RoutineScreen}
-          options={QRTabOptions}
+          options={RoutinesTabOptions}
         />
         <Tab.Screen
           name="News"
