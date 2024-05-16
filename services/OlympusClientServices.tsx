@@ -154,3 +154,18 @@ export const getExercisesById = async (
   const exercise: ExerciseInterface = await response.json();
   return exercise;
 };
+
+export const getNews = async (): Promise<Response> => {
+  const response = await fetch(
+    `https://newsapi.org/v2/everything?q=salud+deporte&pageSize=10&apiKey=e96f02e501f94f699cd812925e66db47`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return response;
+};

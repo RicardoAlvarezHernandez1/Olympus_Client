@@ -8,6 +8,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import appColors from "../assets/styles/appColors";
 import MainScreen from "./MainScreen";
 import RoutineScreen from "./RoutineScreen";
+import NewsScreen from "./NewsScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +29,17 @@ const Body = () => {
     return {
       tabBarIcon: () => (
         <Ionicons name={"logo-github"} size={30} color={appColors.green} />
+      ),
+    };
+  };
+  const NewsTabOptions = (): BottomTabNavigationOptions => {
+    return {
+      tabBarIcon: () => (
+        <Ionicons
+          name={"newspaper-outline"}
+          size={30}
+          color={appColors.green}
+        />
       ),
     };
   };
@@ -54,6 +66,11 @@ const Body = () => {
           name="QR"
           component={RoutineScreen}
           options={QRTabOptions}
+        />
+        <Tab.Screen
+          name="News"
+          component={NewsScreen}
+          options={NewsTabOptions}
         />
       </Tab.Navigator>
     </View>
