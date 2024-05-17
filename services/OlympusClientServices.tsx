@@ -1,10 +1,11 @@
-import { IpDirection } from "./IpDirection";
 import { RoutineInterface } from "../assets/interfaces/RoutineInterface";
 import { MuscleZoneInterface } from "../assets/interfaces/MuscleZoneInterface";
 import { ExerciseInterface } from "../assets/interfaces/ExerciseInterface";
+import { AchievementInterface } from "../assets/interfaces/AchievementInterface";
 
-const API_URL = `http://${IpDirection()}:8082/olympus/v1`;
 const REGISTRATION_PATH = "/user";
+const IPDIRECTION = "192.168.11.24";
+const API_URL = `http://${IPDIRECTION}:8082/olympus/v1`;
 
 export const registerUser = async (
   userName: string,
@@ -175,4 +176,19 @@ export const getNews = async (): Promise<Response> => {
   );
 
   return response;
+};
+
+export const getAchievementsByUser = async (
+  userId: number
+): Promise<AchievementInterface[]> => {
+  const response = await fetch(`${API_URL}/${userId}/achievements`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+
+  const ACHIEVEMENTS: AchievementInterface[] = await response.json();
+  return ACHIEVEMENTS;
 };

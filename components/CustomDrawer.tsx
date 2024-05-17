@@ -21,6 +21,7 @@ import ExerciseScreen from "../screens/Exercises";
 import WorkoutScreen from "../screens/WorkoutScreen";
 import ExercisesScreen from "../screens/ExercisesScreen";
 import NewsScreen from "../screens/NewsScreen";
+import AchievementScreen from "../screens/AchievementsScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -84,6 +85,15 @@ const CustomDrawer = () => {
                     size={25}
                     color={"black"}
                   />
+                ),
+              }}
+            />
+            <Drawer.Screen
+              name="Achievements"
+              component={AchievementScreen}
+              options={{
+                drawerIcon: () => (
+                  <Ionicons name={"medal-outline"} size={25} color={"black"} />
                 ),
               }}
             />

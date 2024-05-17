@@ -9,6 +9,7 @@ import appColors from "../assets/styles/appColors";
 import MainScreen from "./MainScreen";
 import RoutineScreen from "./RoutineScreen";
 import NewsScreen from "./NewsScreen";
+import AchievementScreen from "./AchievementsScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -43,7 +44,17 @@ const Body = () => {
       ),
     };
   };
-
+  const AchievementsTabOptions = (): BottomTabNavigationOptions => {
+    return {
+      tabBarIcon: () => (
+        <Ionicons
+          name={"medal-outline"}
+          size={30}
+          color={appColors.darkGreen}
+        />
+      ),
+    };
+  };
   const tabNavigatorScreenOptions: BottomTabNavigationOptions = {
     headerShown: false,
     tabBarInactiveTintColor: appColors.darkGreen,
@@ -71,6 +82,11 @@ const Body = () => {
           name="News"
           component={NewsScreen}
           options={NewsTabOptions}
+        />
+        <Tab.Screen
+          name="Achievements"
+          component={AchievementScreen}
+          options={AchievementsTabOptions}
         />
       </Tab.Navigator>
     </View>
