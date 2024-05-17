@@ -3,19 +3,12 @@ import {
   Text,
   View,
   ImageBackground,
-  Image,
   TextInput,
 } from "react-native";
 import React from "react";
 import AppColors from "../assets/styles/appColors";
-import {
-  NavigationContainer,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Ionicons } from "@expo/vector-icons";
 import { UserContext } from "../context/UserContext";
 import { registerUser } from "../services/OlympusClientServices";
 

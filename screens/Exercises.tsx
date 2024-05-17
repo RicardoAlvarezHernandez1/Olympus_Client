@@ -20,7 +20,6 @@ const ExerciseScreen = ({ navigation }: ExerciseScreenProps) => {
   const { routineId } = React.useContext(RoutineContext);
 
   const loadExercises = async () => {
-    console.log("musculo mostrado", muscleZoneId);
     const receivedExercises = await getExercisesByMuscleZone(muscleZoneId);
     if (receivedExercises) {
       setExercises(receivedExercises);

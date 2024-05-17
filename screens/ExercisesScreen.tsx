@@ -4,14 +4,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 
 import AppColors from "../assets/styles/appColors";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import {
-  addExerciseToRoutine,
-  getExercisesById,
-  getExercisesByMuscleZone,
-} from "../services/OlympusClientServices";
-import { MuscleContext } from "../context/MuscleContext";
-import { ExerciseInterface } from "../assets/interfaces/ExerciseInterface";
+import { getExercisesById } from "../services/OlympusClientServices";
 import { RoutineContext } from "../context/RoutineContext";
 import { ExerciseContext } from "../context/ExerciseContext";
 

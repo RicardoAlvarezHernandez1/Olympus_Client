@@ -1,28 +1,10 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  Image,
-  TextInput,
-  Linking,
-} from "react-native";
+import { StyleSheet, Text, View, ImageBackground, Linking } from "react-native";
 import React, { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import AppColors from "../assets/styles/appColors";
-import {
-  NavigationContainer,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { Ionicons } from "@expo/vector-icons";
-import { UserContext } from "../context/UserContext";
-import { getNews, getUserRoutines } from "../services/OlympusClientServices";
-import { RoutineInterface } from "../assets/interfaces/RoutineInterface";
-import { RoutineContext } from "../context/RoutineContext";
-import appColors from "../assets/styles/appColors";
+import { getNews } from "../services/OlympusClientServices";
 import { NewsItem } from "../assets/interfaces/NewsInterface";
 
 type WelcomeScreenProps = {

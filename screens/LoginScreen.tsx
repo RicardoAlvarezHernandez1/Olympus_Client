@@ -3,16 +3,11 @@ import {
   Text,
   View,
   ImageBackground,
-  Image,
   TextInput,
 } from "react-native";
 import React from "react";
 import AppColors from "../assets/styles/appColors";
-import {
-  NavigationContainer,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../context/UserContext";
 import { loginUser } from "../services/OlympusClientServices";
