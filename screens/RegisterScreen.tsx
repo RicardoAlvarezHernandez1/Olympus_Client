@@ -61,7 +61,7 @@ const RegisterScreen = ({ navigation }: WelcomeScreenProps) => {
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require("./../assets/images/Fondo_Olympus_Client.png")}
+        source={require("../assets/images/Fondo_Olympus_Client.png")}
         style={styles.image}
       >
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>

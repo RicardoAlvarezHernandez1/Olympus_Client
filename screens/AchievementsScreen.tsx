@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, ImageBackground } from "react-native";
+import { StyleSheet, Text, View, ImageBackground, Image } from "react-native";
 import React from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppColors from "../assets/styles/appColors";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { getAchievementsByUser } from "../services/OlympusClientServices";
@@ -37,6 +38,11 @@ const AchievementScreen = () => {
                 key={achievement.achievementId}
                 style={{ ...styles.touchable, ...styles.boxShadow }}
               >
+                <View>
+                  <ImageBackground
+                    source={require(achievement.achievement_url_image)}
+                  ></ImageBackground>
+                </View>
                 <Text style={styles.buttonContent}>
                   {achievement.achievementDescription}
                 </Text>
