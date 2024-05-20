@@ -90,14 +90,12 @@ const RegisterScreen = ({ navigation }: WelcomeScreenProps) => {
             onChangeText={(text) => setUserWeight(parseFloat(text))}
             placeholder="Your Weight..."
             style={styles.inputStyle}
-            secureTextEntry={true}
           ></TextInput>
           <TextInput
             keyboardType="numeric"
             onChangeText={(text) => setUserHeight(parseFloat(text))}
             placeholder="Your Height..."
             style={styles.inputStyle}
-            secureTextEntry={true}
           ></TextInput>
           <TouchableOpacity
             style={{ ...styles.touchable, ...styles.boxShadow }}

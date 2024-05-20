@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View, ImageBackground, Image } from "react-native";
-import React from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React, { useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import AppColors from "../assets/styles/appColors";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { getAchievementsByUser } from "../services/OlympusClientServices";
 import { AchievementInterface } from "../assets/interfaces/AchievementInterface";
 import { UserContext } from "../context/UserContext";
+import appColors from "../assets/styles/appColors";
 
 const AchievementScreen = () => {
   const [achievements, setAchievements] = React.useState<
@@ -24,29 +25,39 @@ const AchievementScreen = () => {
     loadAchievements();
   }, [userId]);
 
+  useFocusEffect(
+    useCallback(() => {
+      loadAchievements();
+    }, [])
+  );
+
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require("./../assets/images/Fondo_Olympus_Client.png")}
+        source={require("./../assets/images/achievements.jpg")}
         style={styles.image}
       >
         <Text style={styles.welcomeTitle}>Your achievements</Text>
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
+          <Image
+            style={styles.trophy}
+            source={require("../assets/images/trophy.png")}
+          ></Image>
           <ScrollView>
             {achievements.map((achievement) => (
-              <TouchableOpacity
+              <View
                 key={achievement.achievementId}
                 style={{ ...styles.touchable, ...styles.boxShadow }}
               >
                 <View>
                   <ImageBackground
-                    source={require(achievement.achievement_url_image)}
+                    source={{ uri: achievement.achievement_url_image }}
                   ></ImageBackground>
                 </View>
                 <Text style={styles.buttonContent}>
                   {achievement.achievementDescription}
                 </Text>
-              </TouchableOpacity>
+              </View>
             ))}
           </ScrollView>
         </View>
@@ -94,17 +105,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 20,
   },
+  trophy: {
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    borderColor: appColors.darkGreen,
+    borderWidth: 7,
+  },
   welcomeContainer: {
     width: 300,
     height: 500,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
-    borderRadius: 30,
   },
   buttonContent: {
     color: "black",
-    fontWeight: "700",
+    fontWeight: "bold",
     fontSize: 16,
   },
   touchable: {
@@ -115,7 +131,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: 22,
     paddingVertical: 15,
-    backgroundColor: AppColors.green,
+    backgroundColor: AppColors.white,
     alignItems: "center",
   },
   goBack: {

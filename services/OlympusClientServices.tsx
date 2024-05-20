@@ -4,7 +4,7 @@ import { ExerciseInterface } from "../assets/interfaces/ExerciseInterface";
 import { AchievementInterface } from "../assets/interfaces/AchievementInterface";
 
 const REGISTRATION_PATH = "/user";
-const IPDIRECTION = "192.168.11.24";
+const IPDIRECTION = "192.168.11.28";
 const API_URL = `http://${IPDIRECTION}:8082/olympus/v1`;
 
 export const registerUser = async (
@@ -84,6 +84,18 @@ export const newRoutine = async (
   return response.status;
 };
 
+export const removeRoutine = async (routineId: number): Promise<number> => {
+  const response = await fetch(`${API_URL}/routines/${routineId}`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+
+  return response.status;
+};
+
 export const getMusclesZones = async (): Promise<MuscleZoneInterface[]> => {
   const response = await fetch(`${API_URL}/muscle_zone`, {
     method: "GET",
@@ -123,6 +135,24 @@ export const addExerciseToRoutine = async (
     `${API_URL}/excercies/${exerciseId}/routines/${routineId}`,
     {
       method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return response.status;
+};
+
+export const removeExerciseFromRoutine = async (
+  exerciseId: number,
+  routineId: number
+): Promise<number> => {
+  const response = await fetch(
+    `${API_URL}/excercies/${exerciseId}/routines/${routineId}`,
+    {
+      method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

@@ -6,7 +6,10 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { UserContext } from "../context/UserContext";
-import { getUserRoutines } from "../services/OlympusClientServices";
+import {
+  getUserRoutines,
+  removeRoutine,
+} from "../services/OlympusClientServices";
 import { RoutineInterface } from "../assets/interfaces/RoutineInterface";
 import { RoutineContext } from "../context/RoutineContext";
 import appColors from "../assets/styles/appColors";
@@ -19,8 +22,6 @@ const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
   const { userId } = React.useContext(UserContext);
   const { setRoutineId, setRoutineName } = React.useContext(RoutineContext);
   const loadRoutines = async () => {
-    console.log(userId);
-
     const recievedUsers = await getUserRoutines(userId);
     if (recievedUsers != null) {
       setRoutines(recievedUsers);
@@ -69,15 +70,25 @@ const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
           </TouchableOpacity>
           <ScrollView>
             {routines.map((routine) => (
-              <TouchableOpacity
-                key={routine.routineId}
-                style={{ ...styles.touchable, ...styles.boxShadow }}
-                onPress={() =>
-                  onclickRoutine(routine.routineId, routine.routineName)
-                }
-              >
-                <Text style={styles.buttonContent}>{routine.routineName}</Text>
-              </TouchableOpacity>
+              <View>
+                <TouchableOpacity
+                  key={routine.routineId}
+                  style={{ ...styles.touchable, ...styles.boxShadow }}
+                  onPress={() =>
+                    onclickRoutine(routine.routineId, routine.routineName)
+                  }
+                >
+                  <Text style={styles.buttonContent}>
+                    {routine.routineName}
+                  </Text>
+                </TouchableOpacity>
+
+                <Ionicons
+                  name="trash-outline"
+                  size={30}
+                  onPress={() => removeRoutine(routine.routineId)}
+                />
+              </View>
             ))}
           </ScrollView>
         </View>

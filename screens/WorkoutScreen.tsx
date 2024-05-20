@@ -3,23 +3,26 @@ import React from "react";
 import AppColors from "../assets/styles/appColors";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { getExercisesByWorkout } from "../services/OlympusClientServices";
+import {
+  getExercisesByWorkout,
+  removeExerciseFromRoutine,
+} from "../services/OlympusClientServices";
 import { ExerciseInterface } from "../assets/interfaces/ExerciseInterface";
 import { RoutineContext } from "../context/RoutineContext";
 import { ExerciseContext } from "../context/ExerciseContext";
+import { Ionicons } from "@expo/vector-icons";
+import appColors from "../assets/styles/appColors";
 
 type MuscleScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
 const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
   const [exercises, setExercises] = React.useState<ExerciseInterface[]>([]);
-  const { routineId, routineName } = React.useContext(RoutineContext);
+  const { routineId, setRoutineId, routineName } =
+    React.useContext(RoutineContext);
   const { exerciseId, setExerciseId } = React.useContext(ExerciseContext);
   const loadExercises = async () => {
-    console.log("hola", routineId);
-
     const recievedExercises = await getExercisesByWorkout(routineId);
-    console.log(recievedExercises);
 
     if (recievedExercises) {
       setExercises(recievedExercises);
@@ -35,6 +38,17 @@ const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
     navigation.navigate("Exercise");
   };
 
+  const addExercise = () => {
+    setRoutineId(routineId);
+    navigation.navigate("Muscles");
+  };
+
+  const removeExercise = (id: number) => {
+    removeExerciseFromRoutine(id, routineId);
+    loadExercises();
+    window.alert("holaa");
+  };
+
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -43,17 +57,34 @@ const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
       >
         <Text style={styles.welcomeTitle}>Your Workout {routineName}</Text>
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
+          <TouchableOpacity
+            style={styles.touchable}
+            onPress={() => addExercise()}
+          >
+            <Ionicons
+              name="add-circle-outline"
+              size={30}
+              color={appColors.white}
+            />
+          </TouchableOpacity>
           <ScrollView>
             {exercises.map((exercise) => (
-              <TouchableOpacity
-                onPress={() => onClickButton(exercise.exerciseId)}
-                key={exercise.exerciseId}
-                style={{ ...styles.touchable, ...styles.boxShadow }}
-              >
-                <Text style={styles.buttonContent}>
-                  {exercise.exerciseName}
-                </Text>
-              </TouchableOpacity>
+              <View>
+                <TouchableOpacity
+                  onPress={() => onClickButton(exercise.exerciseId)}
+                  key={exercise.exerciseId}
+                  style={{ ...styles.touchable, ...styles.boxShadow }}
+                >
+                  <Text style={styles.buttonContent}>
+                    {exercise.exerciseName}
+                  </Text>
+                </TouchableOpacity>
+                <Ionicons
+                  name="trash-outline"
+                  size={30}
+                  onPress={() => removeExercise(exercise.exerciseId)}
+                />
+              </View>
             ))}
             <TouchableOpacity
               style={styles.goBack}
