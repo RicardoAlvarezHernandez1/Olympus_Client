@@ -10,6 +10,7 @@ import { NewsItem } from "../assets/interfaces/NewsInterface";
 type WelcomeScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
+
 const NewsScreen = ({ navigation }: WelcomeScreenProps) => {
   const [news, setNews] = React.useState<NewsItem[]>([]);
 
@@ -57,26 +58,17 @@ const NewsScreen = ({ navigation }: WelcomeScreenProps) => {
                 style={{ ...styles.touchable, ...styles.boxShadow }}
                 onPress={() => Linking.openURL(individualNews.url)}
               >
-                <View style={styles.imageContainer}>
-                  <ImageBackground
-                    source={{ uri: individualNews.urlToImage }}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <View style={styles.newsTitleContainer}>
-                      <Text
-                        style={{ ...styles.newsTitle, ...styles.boxShadow }}
-                      >
-                        {individualNews.title}
-                      </Text>
-                    </View>
-                  </ImageBackground>
-                </View>
-                <Text></Text>
+                <ImageBackground
+                  source={{ uri: individualNews.urlToImage }}
+                  style={styles.imageBackground}
+                  imageStyle={styles.imageBorder}
+                >
+                  <View style={styles.newsTitleContainer}>
+                    <Text style={{ ...styles.newsTitle, ...styles.boxShadow }}>
+                      {individualNews.title}
+                    </Text>
+                  </View>
+                </ImageBackground>
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -90,7 +82,7 @@ export default NewsScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 20,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -112,55 +104,42 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 6, height: 6 },
     textShadowRadius: 5,
   },
-  description: {
-    fontSize: 30,
-    fontWeight: "700",
-    textAlign: "center",
-    marginBottom: 30,
-  },
-  imageContainer: {
-    width: "100%",
-    height: "100%",
-    borderRadius: 15,
-    display: "flex",
-    justifyContent: "center",
-  },
-  inputStyle: {
-    width: 250,
-    height: 50,
-    backgroundColor: AppColors.limeGreen,
-    borderRadius: 10,
-    marginTop: 20,
-  },
   welcomeContainer: {
     width: "100%",
-    height: "100%",
+    height: 500,
     alignItems: "center",
-  },
-  buttonContent: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 16,
   },
   touchable: {
     width: 325,
     height: 160,
     marginTop: 30,
     marginBottom: 15,
-    borderColor: "white",
-    borderWidth: 2,
     borderRadius: 15,
+    overflow: "hidden",
+  },
+  imageBackground: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
     alignItems: "center",
   },
-  login: {
-    marginTop: 10,
-    marginBottom: 15,
-    borderColor: "white",
-    borderWidth: 2,
+  imageBorder: {
     borderRadius: 15,
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    backgroundColor: AppColors.darkGreen,
+  },
+  newsTitleContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    paddingVertical: 10,
+    alignItems: "center",
+  },
+  newsTitle: {
+    textAlign: "center",
+    color: AppColors.white,
+    fontSize: 15,
+    fontWeight: "700",
   },
   boxShadow: {
     shadowColor: "black",
@@ -171,17 +150,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 2,
     elevation: 16,
-  },
-  newsTitleContainer: {
-    width: "75%",
-    display: "flex",
-    justifyContent: "center",
-    marginLeft: 40,
-  },
-  newsTitle: {
-    textAlign: "center",
-    color: AppColors.white,
-    fontSize: 15,
-    fontWeight: "700",
   },
 });

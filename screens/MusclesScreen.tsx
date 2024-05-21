@@ -125,10 +125,10 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderWidth: 2,
     borderRadius: 15,
-    paddingHorizontal: 62,
     paddingVertical: 15,
+    paddingHorizontal: 40,
     backgroundColor: AppColors.green,
-    alignContent: "center",
+    alignItems: "center",
   },
   goBack: {
     marginTop: 30,

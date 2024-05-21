@@ -54,7 +54,7 @@ const CustomDrawer = () => {
             screenOptions={drawerNavigatorScreenOptions}
           >
             <Drawer.Screen
-              name="Main"
+              name="Welcome"
               component={Tab}
               options={{
                 drawerIcon: () => (

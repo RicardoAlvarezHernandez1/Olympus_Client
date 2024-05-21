@@ -70,6 +70,12 @@ const ExerciseScreen = ({ navigation }: ExerciseScreenProps) => {
             >
               <Text style={styles.buttonContent}>Go Back</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={{ ...styles.goBack, width: 200 }}
+              onPress={() => navigation.navigate("Routines")}
+            >
+              <Text style={styles.buttonContent}>Return to workouts</Text>
+            </TouchableOpacity>
           </ScrollView>
         </View>
       </ImageBackground>

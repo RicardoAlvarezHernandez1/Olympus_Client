@@ -1,6 +1,6 @@
 export interface AchievementInterface {
   achievementId: number;
   achievementDescription: string;
-  achievement_url_image: string;
+  achievementUrlImage: string;
   gived: boolean;
 }

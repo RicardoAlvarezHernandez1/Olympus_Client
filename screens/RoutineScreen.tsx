@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ImageBackground } from "react-native";
+import { StyleSheet, Text, View, ImageBackground, Alert } from "react-native";
 import React, { useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import AppColors from "../assets/styles/appColors";
@@ -50,6 +50,37 @@ const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
     navigation.navigate("Workout");
   };
 
+  const onclickRemove = async (id: number, name: string) => {
+    {
+      Alert.alert(
+        `Delete`,
+        `Are you sure you want to delete the workout ${name}?`,
+        [
+          {
+            text: "Confirm",
+            onPress: () =>
+              removeRoutine(id)
+                .then((status) => {
+                  if (status == 200) {
+                    window.alert("Workout deleted succesfully");
+                    loadRoutines();
+                  } else {
+                    window.alert(
+                      `Error while trying to delete the workout ${name}`
+                    );
+                  }
+                })
+                .catch((err) => console.log(err)),
+          },
+          {
+            text: "Cancel",
+            onPress: () => window.alert("Deleted Cancelled"),
+          },
+        ]
+      );
+    }
+  };
+
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -58,10 +89,7 @@ const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
       >
         <Text style={styles.welcomeTitle}>YOUR WORKOUTS</Text>
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
-          <TouchableOpacity
-            style={styles.touchable}
-            onPress={() => onclickButton()}
-          >
+          <TouchableOpacity style={styles.add} onPress={() => onclickButton()}>
             <Ionicons
               name="add-circle-outline"
               size={30}
@@ -81,13 +109,17 @@ const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
                   <Text style={styles.buttonContent}>
                     {routine.routineName}
                   </Text>
+                  <TouchableOpacity>
+                    <Ionicons
+                      name="trash-outline"
+                      size={30}
+                      onPress={(e) => {
+                        e.stopPropagation();
+                        onclickRemove(routine.routineId, routine.routineName);
+                      }}
+                    />
+                  </TouchableOpacity>
                 </TouchableOpacity>
-
-                <Ionicons
-                  name="trash-outline"
-                  size={30}
-                  onPress={() => removeRoutine(routine.routineId)}
-                />
               </View>
             ))}
           </ScrollView>
@@ -118,7 +150,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontStyle: "italic",
     color: AppColors.white,
-    marginBottom: 60,
+    marginBottom: 30,
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowOffset: { width: 6, height: 6 },
     textShadowRadius: 5,
@@ -149,6 +181,17 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
+  add: {
+    marginTop: 30,
+    marginBottom: 15,
+    borderColor: "white",
+    borderWidth: 2,
+    borderRadius: 15,
+    paddingHorizontal: 62,
+    paddingVertical: 15,
+    backgroundColor: AppColors.green,
+    alignItems: "center",
+  },
   touchable: {
     marginTop: 30,
     marginBottom: 15,
@@ -159,6 +202,9 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     backgroundColor: AppColors.green,
     alignItems: "center",
+    width: 220,
+    justifyContent: "space-between",
+    flexDirection: "row",
   },
   login: {
     marginTop: 10,

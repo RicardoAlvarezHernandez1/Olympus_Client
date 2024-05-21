@@ -51,6 +51,7 @@ const RegisterScreen = ({ navigation }: WelcomeScreenProps) => {
               return null;
             } else {
               window.alert("Registro exitoso");
+              navigation.navigate("Login");
             }
           })
           .catch((err) => console.log(err));

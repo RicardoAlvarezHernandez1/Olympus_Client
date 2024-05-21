@@ -21,6 +21,19 @@ const AchievementScreen = () => {
     }
   };
 
+  const imageMap = {
+    "1": require("../assets/images/achievement1.png"),
+    "2": require("../assets/images/achievement2.png"),
+    "3": require("../assets/images/achievement3.png"),
+    "4": require("../assets/images/achievement4.png"),
+    "5": require("../assets/images/achievement5.png"),
+    "6": require("../assets/images/achievement6.png"),
+    "7": require("../assets/images/achievement7.png"),
+    "8": require("../assets/images/achievement8.png"),
+    "9": require("../assets/images/achievement9.png"),
+    "10": require("../assets/images/achievement10.png"),
+  };
+
   React.useEffect(() => {
     loadAchievements();
   }, [userId]);
@@ -30,7 +43,6 @@ const AchievementScreen = () => {
       loadAchievements();
     }, [])
   );
-
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -42,7 +54,7 @@ const AchievementScreen = () => {
           <Image
             style={styles.trophy}
             source={require("../assets/images/trophy.png")}
-          ></Image>
+          />
           <ScrollView>
             {achievements.map((achievement) => (
               <View
@@ -50,9 +62,10 @@ const AchievementScreen = () => {
                 style={{ ...styles.touchable, ...styles.boxShadow }}
               >
                 <View>
-                  <ImageBackground
-                    source={{ uri: achievement.achievement_url_image }}
-                  ></ImageBackground>
+                  <Image
+                    source={imageMap[achievement.achievementId]}
+                    style={styles.icons}
+                  />
                 </View>
                 <Text style={styles.buttonContent}>
                   {achievement.achievementDescription}
@@ -105,12 +118,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 20,
   },
-  trophy: {
-    height: 100,
-    width: 100,
-    borderRadius: 50,
+  trophy: {},
+  icons: {
+    height: 50,
+    width: 50,
     borderColor: appColors.darkGreen,
-    borderWidth: 7,
+    borderWidth: 2,
+    borderRadius: 20,
   },
   welcomeContainer: {
     width: 300,

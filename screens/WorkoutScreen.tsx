@@ -31,7 +31,7 @@ const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
 
   React.useEffect(() => {
     loadExercises();
-  }, [routineId]);
+  }, [exercises]);
 
   const onClickButton = (id: number) => {
     setExerciseId(id);
@@ -46,7 +46,7 @@ const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
   const removeExercise = (id: number) => {
     removeExerciseFromRoutine(id, routineId);
     loadExercises();
-    window.alert("holaa");
+    window.alert("Exercise deleted successfully");
   };
 
   return (
@@ -57,10 +57,7 @@ const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
       >
         <Text style={styles.welcomeTitle}>Your Workout {routineName}</Text>
         <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
-          <TouchableOpacity
-            style={styles.touchable}
-            onPress={() => addExercise()}
-          >
+          <TouchableOpacity style={styles.add} onPress={() => addExercise()}>
             <Ionicons
               name="add-circle-outline"
               size={30}
@@ -78,12 +75,17 @@ const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
                   <Text style={styles.buttonContent}>
                     {exercise.exerciseName}
                   </Text>
+                  <TouchableOpacity>
+                    <Ionicons
+                      name="trash-outline"
+                      size={30}
+                      onPress={(e) => {
+                        e.stopPropagation();
+                        removeExercise(exercise.exerciseId);
+                      }}
+                    />
+                  </TouchableOpacity>
                 </TouchableOpacity>
-                <Ionicons
-                  name="trash-outline"
-                  size={30}
-                  onPress={() => removeExercise(exercise.exerciseId)}
-                />
               </View>
             ))}
             <TouchableOpacity
@@ -162,6 +164,17 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: 100,
   },
+  add: {
+    marginTop: 30,
+    marginBottom: 15,
+    borderColor: "white",
+    borderWidth: 2,
+    borderRadius: 15,
+    paddingHorizontal: 22,
+    paddingVertical: 15,
+    backgroundColor: AppColors.green,
+    alignItems: "center",
+  },
   touchable: {
     marginTop: 30,
     marginBottom: 15,
@@ -172,6 +185,9 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     backgroundColor: AppColors.green,
     alignItems: "center",
+    justifyContent: "space-between",
+    width: 250,
+    flexDirection: "row",
   },
   login: {
     marginTop: 10,

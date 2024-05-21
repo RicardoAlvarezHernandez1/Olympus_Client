@@ -86,7 +86,7 @@ export const newRoutine = async (
 
 export const removeRoutine = async (routineId: number): Promise<number> => {
   const response = await fetch(`${API_URL}/routines/${routineId}`, {
-    method: "POST",
+    method: "DELETE",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
