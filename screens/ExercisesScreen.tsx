@@ -51,7 +51,7 @@ const ExercisesScreen = ({ navigation }: ExerciseScreenProps) => {
           <View style={styles.imageContainer}>
             <ImageBackground
               style={styles.image}
-              source={require("./../assets/images/Fondo_Olympus_Client.png")}
+              source={{ uri: urlImage }}
             ></ImageBackground>
           </View>
           <View>
@@ -78,8 +78,8 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   imageContainer: {
-    width: 200,
-    height: 150,
+    width: 250,
+    height: 200,
   },
   tittleContainer: {
     flexDirection: "row",
