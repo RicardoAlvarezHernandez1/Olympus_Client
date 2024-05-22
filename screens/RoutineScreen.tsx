@@ -98,9 +98,8 @@ const RoutineScreen = ({ navigation }: WelcomeScreenProps) => {
           </TouchableOpacity>
           <ScrollView>
             {routines.map((routine) => (
-              <View>
+              <View key={routine.routineId}>
                 <TouchableOpacity
-                  key={routine.routineId}
                   style={{ ...styles.touchable, ...styles.boxShadow }}
                   onPress={() =>
                     onclickRoutine(routine.routineId, routine.routineName)

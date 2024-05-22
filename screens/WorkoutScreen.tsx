@@ -66,10 +66,9 @@ const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
           </TouchableOpacity>
           <ScrollView>
             {exercises.map((exercise) => (
-              <View>
+              <View key={exercise.exerciseId}>
                 <TouchableOpacity
                   onPress={() => onClickButton(exercise.exerciseId)}
-                  key={exercise.exerciseId}
                   style={{ ...styles.touchable, ...styles.boxShadow }}
                 >
                   <Text style={styles.buttonContent}>

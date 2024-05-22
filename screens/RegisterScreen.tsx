@@ -11,6 +11,7 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../context/UserContext";
 import { registerUser } from "../services/OlympusClientServices";
+import { validateEmail } from "../constants/global.const";
 
 type WelcomeScreenProps = {
   navigation: NavigationProp<ParamListBase>;
@@ -43,7 +44,7 @@ const RegisterScreen = ({ navigation }: WelcomeScreenProps) => {
     {
       if (userName == "" || userEmail == "" || userPassword == "") {
         window.alert("Por favor , rellene los campos necesarios");
-      } else {
+      } else if (validateEmail(userEmail)) {
         registerUser(userName, userEmail, userPassword, userHeight, userWeight)
           .then((status) => {
             if (status == 400) {
@@ -55,6 +56,8 @@ const RegisterScreen = ({ navigation }: WelcomeScreenProps) => {
             }
           })
           .catch((err) => console.log(err));
+      } else {
+        window.alert("Please enter a valid email address");
       }
     }
   };

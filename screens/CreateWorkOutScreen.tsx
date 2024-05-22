@@ -31,7 +31,7 @@ const CreateWorkOutScreen = ({ navigation }: WelcomeScreenProps) => {
             window.alert("ERROR");
             return null;
           } else {
-            navigation.navigate("Muscles");
+            navigation.navigate("Routines");
           }
         })
         .catch((err) => console.log(err));

@@ -51,7 +51,11 @@ const ExercisesScreen = ({ navigation }: ExerciseScreenProps) => {
           <View style={styles.imageContainer}>
             <ImageBackground
               style={styles.image}
-              source={{ uri: urlImage }}
+              source={
+                urlImage
+                  ? { uri: urlImage }
+                  : require("./../assets/images/loader2.gif")
+              }
             ></ImageBackground>
           </View>
           <View>
