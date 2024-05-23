@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
     height: "100%",
@@ -120,14 +120,15 @@ const styles = StyleSheet.create({
   },
   trophy: {},
   icons: {
-    height: 50,
-    width: 50,
+    height: 60,
+    width: 60,
     borderColor: appColors.darkGreen,
     borderWidth: 2,
     borderRadius: 20,
+    marginRight: 10,
   },
   welcomeContainer: {
-    width: 300,
+    width: 400,
     height: 500,
     alignItems: "center",
     justifyContent: "center",
@@ -147,6 +148,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     backgroundColor: AppColors.white,
     alignItems: "center",
+    flexDirection: "row",
   },
   goBack: {
     marginTop: 30,
