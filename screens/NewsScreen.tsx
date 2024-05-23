@@ -6,12 +6,13 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { getNews } from "../services/OlympusClientServices";
 import { NewsItem } from "../assets/interfaces/NewsInterface";
+import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
-type WelcomeScreenProps = {
+type NewsScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
 
-const NewsScreen = ({ navigation }: WelcomeScreenProps) => {
+const NewsScreen = ({ navigation }: NewsScreenProps) => {
   const [news, setNews] = React.useState<NewsItem[]>([]);
 
   const loadNews = async () => {
@@ -29,7 +30,7 @@ const NewsScreen = ({ navigation }: WelcomeScreenProps) => {
         setNews(data.articles);
       })
       .catch((error) => {
-        console.error("Error en la solicitud: ", error);
+        console.error("Request error: ", error);
       });
   };
 
@@ -46,11 +47,11 @@ const NewsScreen = ({ navigation }: WelcomeScreenProps) => {
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require("./../assets/images/Fondo_Olympus_Client.png")}
-        style={styles.image}
+        source={OLYMPUS_CLIENT_BACKGROUND_IMAGE}
+        style={styles.backgroundImage}
       >
-        <Text style={styles.welcomeTitle}>FITNESS NEWS</Text>
-        <View style={styles.welcomeContainer}>
+        <Text style={styles.Title}>FITNESS NEWS</Text>
+        <View style={styles.newsContainer}>
           <ScrollView>
             {news.map((individualNews, index) => (
               <TouchableOpacity
@@ -86,13 +87,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  image: {
+  backgroundImage: {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
     height: "100%",
   },
-  welcomeTitle: {
+  Title: {
     fontWeight: "700",
     fontSize: 45,
     textAlign: "center",
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 6, height: 6 },
     textShadowRadius: 5,
   },
-  welcomeContainer: {
+  newsContainer: {
     width: "100%",
     height: 500,
     alignItems: "center",

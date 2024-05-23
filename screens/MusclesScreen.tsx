@@ -6,11 +6,12 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { getMusclesZones } from "../services/OlympusClientServices";
 import { MuscleZoneInterface } from "../assets/interfaces/MuscleZoneInterface";
 import { MuscleContext } from "../context/MuscleContext";
+import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
-type WelcomeScreenProps = {
+type MuscleScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
-const MusclesScreen = ({ navigation }: WelcomeScreenProps) => {
+const MusclesScreen = ({ navigation }: MuscleScreenProps) => {
   const [muscleZones, setMuscleZones] = React.useState<MuscleZoneInterface[]>(
     []
   );
@@ -32,14 +33,15 @@ const MusclesScreen = ({ navigation }: WelcomeScreenProps) => {
     setMuscleName(name);
     navigation.navigate("Exercises");
   };
+
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require("./../assets/images/Fondo_Olympus_Client.png")}
-        style={styles.image}
+        source={OLYMPUS_CLIENT_BACKGROUND_IMAGE}
+        style={styles.backgroundImage}
       >
-        <Text style={styles.welcomeTitle}>Choose a muscle zone</Text>
-        <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
+        <Text style={styles.chooseAMuscleTitle}>Choose a muscle zone</Text>
+        <View style={{ ...styles.boxShadow, ...styles.musclesContainer }}>
           <ScrollView>
             {muscleZones.map((muscleZone) => (
               <TouchableOpacity
@@ -75,13 +77,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  image: {
+  backgroundImage: {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
     height: "100%",
   },
-  welcomeTitle: {
+  chooseAMuscleTitle: {
     fontWeight: "700",
     fontSize: 45,
     textAlign: "center",
@@ -93,20 +95,7 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 6, height: 6 },
     textShadowRadius: 5,
   },
-  description: {
-    fontSize: 30,
-    fontWeight: "700",
-    textAlign: "center",
-    marginBottom: 30,
-  },
-  inputStyle: {
-    width: 250,
-    height: 50,
-    backgroundColor: AppColors.limeGreen,
-    borderRadius: 10,
-    marginTop: 20,
-  },
-  welcomeContainer: {
+  musclesContainer: {
     width: 300,
     height: 500,
     alignItems: "center",
@@ -141,16 +130,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     width: 100,
-  },
-  login: {
-    marginTop: 10,
-    marginBottom: 15,
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 15,
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    backgroundColor: AppColors.darkGreen,
   },
   boxShadow: {
     shadowColor: "black",

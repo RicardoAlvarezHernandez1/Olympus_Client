@@ -10,6 +10,7 @@ import {
 import { MuscleContext } from "../context/MuscleContext";
 import { ExerciseInterface } from "../assets/interfaces/ExerciseInterface";
 import { RoutineContext } from "../context/RoutineContext";
+import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
 type ExerciseScreenProps = {
   navigation: NavigationProp<ParamListBase>;
@@ -45,11 +46,11 @@ const ExerciseScreen = ({ navigation }: ExerciseScreenProps) => {
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require("./../assets/images/Fondo_Olympus_Client.png")}
-        style={styles.image}
+        source={OLYMPUS_CLIENT_BACKGROUND_IMAGE}
+        style={styles.backgroundImage}
       >
-        <Text style={styles.welcomeTitle}>{muscleName} exercises</Text>
-        <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
+        <Text style={styles.muscleTitle}>{muscleName} exercises</Text>
+        <View style={{ ...styles.boxShadow, ...styles.exercisesContainer }}>
           <ScrollView>
             {exercises.map((exercise) => (
               <TouchableOpacity
@@ -91,13 +92,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  image: {
+  backgroundImage: {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
     height: "100%",
   },
-  welcomeTitle: {
+  muscleTitle: {
     fontWeight: "700",
     fontSize: 45,
     textAlign: "center",
@@ -109,20 +110,7 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 6, height: 6 },
     textShadowRadius: 5,
   },
-  description: {
-    fontSize: 30,
-    fontWeight: "700",
-    textAlign: "center",
-    marginBottom: 30,
-  },
-  inputStyle: {
-    width: 250,
-    height: 50,
-    backgroundColor: AppColors.limeGreen,
-    borderRadius: 10,
-    marginTop: 20,
-  },
-  welcomeContainer: {
+  exercisesContainer: {
     width: 300,
     height: 500,
     alignItems: "center",
@@ -157,16 +145,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     width: 100,
-  },
-  login: {
-    marginTop: 10,
-    marginBottom: 15,
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 15,
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    backgroundColor: AppColors.darkGreen,
   },
   boxShadow: {
     shadowColor: "black",

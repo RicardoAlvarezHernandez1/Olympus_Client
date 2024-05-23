@@ -11,30 +11,27 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../context/UserContext";
 import { loginUser } from "../services/OlympusClientServices";
+import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
-type WelcomeScreenProps = {
+type LoginScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
-const LoginScreen = ({ navigation }: WelcomeScreenProps) => {
-  const { isLogged, toggleIsLogged } = React.useContext(UserContext);
-  const { user, setUserName, setId } = React.useContext(UserContext);
+const LoginScreen = ({ navigation }: LoginScreenProps) => {
+  const { toggleIsLogged } = React.useContext(UserContext);
+  const { setUserName, setId } = React.useContext(UserContext);
   const [mail, setMail] = React.useState("");
   const [userPassword, setuserPassword] = React.useState("");
-
-  function setPassword(text: string) {
-    setuserPassword(text);
-  }
 
   const onClickButton = () => {
     const email: string = mail;
     const password: string = userPassword;
     if (email.trim() == "" || password.trim() == "") {
-      window.alert("Por favor , rellene los campos necesarios");
+      window.alert("Please, fill in the required fields");
     } else {
       loginUser(email, password)
         .then((response) => {
           if (!response.ok) {
-            window.alert("El usuario o la contraseña son incorrectos");
+            window.alert("The user or password are incorrect");
             return null;
           }
           return response.json();
@@ -49,12 +46,12 @@ const LoginScreen = ({ navigation }: WelcomeScreenProps) => {
             setUserName(data.userName);
             toggleIsLogged();
           } else {
-            window.alert("El usuario o la contraseña son incorrectos");
+            window.alert("The user or password are incorrect");
           }
         })
         .catch((error) => {
-          console.error("Error en la solicitud: ", error);
-          window.alert("Usuario no registrado");
+          console.error("Request error: ", error);
+          window.alert("User not registered");
         });
     }
   };
@@ -62,10 +59,10 @@ const LoginScreen = ({ navigation }: WelcomeScreenProps) => {
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require("./../assets/images/Fondo_Olympus_Client.png")}
+        source={OLYMPUS_CLIENT_BACKGROUND_IMAGE}
         style={styles.image}
       >
-        <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
+        <View style={{ ...styles.boxShadow, ...styles.loginContainer }}>
           <Text style={styles.description}>You already have an account?</Text>
           <Text style={styles.description}>Log in below</Text>
           <TextInput
@@ -119,7 +116,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingLeft: 10,
   },
-  welcomeContainer: {
+  loginContainer: {
     width: 300,
     height: 380,
     alignItems: "center",
@@ -139,16 +136,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: AppColors.darkGreen,
-  },
-  login: {
-    marginTop: 10,
-    marginBottom: 15,
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 15,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: AppColors.green,
   },
   boxShadow: {
     shadowColor: "black",

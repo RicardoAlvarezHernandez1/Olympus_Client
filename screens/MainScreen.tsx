@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, ImageBackground, Image } from "react-native";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import React from "react";
 import AppColors from "../assets/styles/appColors";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../context/UserContext";
 import appColors from "../assets/styles/appColors";
+import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
 type MainScreenProps = {
   navigation: NavigationProp<ParamListBase>;
@@ -16,17 +17,17 @@ const MainScreen = ({ navigation }: MainScreenProps) => {
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require("./../assets/images/Fondo_Olympus_Client.png")}
+        source={OLYMPUS_CLIENT_BACKGROUND_IMAGE}
         style={styles.backgroundImage}
       >
         <Text style={styles.welcomeTitle}>Welcome {user}</Text>
-        <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
+        <View style={{ ...styles.boxShadow, ...styles.mainScreenContainer }}>
           <TouchableOpacity
             style={styles.touchable}
             onPress={() => navigation.navigate("Achievements")}
           >
             <ImageBackground
-              style={styles.image}
+              style={styles.buttonImage}
               source={require("../assets/images/achievementsButton.jpg")}
               imageStyle={styles.imageBorder}
             >
@@ -40,7 +41,7 @@ const MainScreen = ({ navigation }: MainScreenProps) => {
             onPress={() => navigation.navigate("Routines")}
           >
             <ImageBackground
-              style={styles.image}
+              style={styles.buttonImage}
               source={require("../assets/images/workouts.jpg")}
               imageStyle={styles.imageBorder}
             >
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 6, height: 6 },
     textShadowRadius: 5,
   },
-  welcomeContainer: {
+  mainScreenContainer: {
     width: 300,
     height: 500,
     alignItems: "center",
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: "hidden",
   },
-  image: {
+  buttonImage: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

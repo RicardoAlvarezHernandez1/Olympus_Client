@@ -11,19 +11,18 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../context/UserContext";
 import { newRoutine } from "../services/OlympusClientServices";
-import { RoutineContext } from "../context/RoutineContext";
+import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
-type WelcomeScreenProps = {
+type CreateWorkoutScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
-const CreateWorkOutScreen = ({ navigation }: WelcomeScreenProps) => {
+const CreateWorkOutScreen = ({ navigation }: CreateWorkoutScreenProps) => {
   const [routineName, setRoutineName] = React.useState("");
   const { userId } = React.useContext(UserContext);
-  const { routineId, setRoutineId } = React.useContext(RoutineContext);
 
   const onClickButton = () => {
     if (routineName.trim() == "") {
-      window.alert("Por favor , rellene los campos necesarios");
+      window.alert("Please fill in the required fields");
     } else {
       newRoutine(userId, routineName)
         .then((status) => {
@@ -41,11 +40,11 @@ const CreateWorkOutScreen = ({ navigation }: WelcomeScreenProps) => {
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require("./../assets/images/Fondo_Olympus_Client.png")}
-        style={styles.image}
+        source={OLYMPUS_CLIENT_BACKGROUND_IMAGE}
+        style={styles.backgroundImage}
       >
-        <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
-          <Text style={styles.description}>Name</Text>
+        <View style={{ ...styles.boxShadow, ...styles.createWorkoutContainer }}>
+          <Text style={styles.title}>Name</Text>
           <TextInput
             onChangeText={(text) => setRoutineName(text)}
             placeholder="Your routine name..."
@@ -77,13 +76,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  image: {
+  backgroundImage: {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
     height: "100%",
   },
-  description: {
+  title: {
     fontSize: 25,
     fontWeight: "400",
     textAlign: "center",
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingLeft: 10,
   },
-  welcomeContainer: {
+  createWorkoutContainer: {
     width: 300,
     height: 380,
     alignItems: "center",
@@ -118,16 +117,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: AppColors.darkGreen,
-  },
-  login: {
-    marginTop: 10,
-    marginBottom: 15,
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 15,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: AppColors.green,
   },
   boxShadow: {
     shadowColor: "black",

@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
 import AppColors from "../assets/styles/appColors";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { getExercisesById } from "../services/OlympusClientServices";
 import { RoutineContext } from "../context/RoutineContext";
 import { ExerciseContext } from "../context/ExerciseContext";
+import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
 type ExerciseScreenProps = {
   navigation: NavigationProp<ParamListBase>;
@@ -33,20 +33,20 @@ const ExercisesScreen = ({ navigation }: ExerciseScreenProps) => {
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require("./../assets/images/Fondo_Olympus_Client.png")}
+        source={OLYMPUS_CLIENT_BACKGROUND_IMAGE}
         style={styles.image}
       >
-        <Text style={styles.welcomeTitle}>{routineName}</Text>
-        <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
-          <View style={styles.tittleContainer}>
+        <Text style={styles.workoutTitle}>{routineName}</Text>
+        <View style={{ ...styles.boxShadow, ...styles.exerciseContainer }}>
+          <View style={styles.titleContainer}>
             <Ionicons
               name={"arrow-undo-circle-outline"}
               size={25}
               color={"black"}
-              style={styles.icono}
+              style={styles.icon}
               onPress={() => navigation.navigate("Workout")}
             />
-            <Text style={styles.tittle}>{exerciseName}</Text>
+            <Text style={styles.title}>{exerciseName}</Text>
           </View>
           <View style={styles.imageContainer}>
             <ImageBackground
@@ -85,13 +85,13 @@ const styles = StyleSheet.create({
     width: 250,
     height: 200,
   },
-  tittleContainer: {
+  titleContainer: {
     flexDirection: "row",
   },
-  icono: {
+  icon: {
     marginRight: 20,
   },
-  welcomeTitle: {
+  workoutTitle: {
     fontWeight: "700",
     fontSize: 45,
     textAlign: "center",
@@ -108,14 +108,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: 200,
   },
-  inputStyle: {
-    width: 250,
-    height: 50,
-    backgroundColor: AppColors.limeGreen,
-    borderRadius: 10,
-    marginTop: 20,
-  },
-  welcomeContainer: {
+  exerciseContainer: {
     width: 300,
     height: 580,
     alignItems: "center",
@@ -123,48 +116,10 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 30,
   },
-  buttonContent: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  tittle: {
+  title: {
     color: "black",
     fontWeight: "700",
     fontSize: 18,
-  },
-  touchable: {
-    marginTop: 30,
-    marginBottom: 15,
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 15,
-    paddingHorizontal: 22,
-    paddingVertical: 15,
-    backgroundColor: AppColors.green,
-    alignItems: "center",
-  },
-  goBack: {
-    marginTop: 30,
-    marginBottom: 15,
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 15,
-    paddingVertical: 10,
-    backgroundColor: AppColors.darkGreen,
-    alignItems: "center",
-    alignSelf: "center",
-    width: 100,
-  },
-  login: {
-    marginTop: 10,
-    marginBottom: 15,
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 15,
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    backgroundColor: AppColors.darkGreen,
   },
   boxShadow: {
     shadowColor: "black",

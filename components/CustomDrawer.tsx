@@ -1,10 +1,8 @@
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import {
   DrawerNavigationOptions,
   createDrawerNavigator,
 } from "@react-navigation/drawer";
-//import CustomHeader from './CustomHeader';
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 import appColors from "../assets/styles/appColors";
@@ -13,7 +11,6 @@ import RegisterScreen from "../screens/RegisterScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RoutineScreen from "../screens/RoutineScreen";
-import MainScreen from "../screens/MainScreen";
 import Tab from "../screens/Tab";
 import CreateWorkOutScreen from "../screens/CreateWorkOutScreen";
 import MusclesScreen from "../screens/MusclesScreen";

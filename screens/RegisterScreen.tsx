@@ -11,27 +11,23 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../context/UserContext";
 import { registerUser } from "../services/OlympusClientServices";
-import { validateEmail } from "../constants/global.const";
+import {
+  OLYMPUS_CLIENT_BACKGROUND_IMAGE,
+  validateEmail,
+} from "../constants/global.const";
 
-type WelcomeScreenProps = {
+type RegisterScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
-const RegisterScreen = ({ navigation }: WelcomeScreenProps) => {
+const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
   const { user, setUserName } = React.useContext(UserContext);
   const [userEmail, setuserEmail] = React.useState("");
   const [userPassword, setuserPassword] = React.useState("");
   const [userWeight, setUserWeight] = React.useState(0);
   const [userHeight, setUserHeight] = React.useState(0);
-  const [isSuccesfull, setisSuccesfull] = React.useState(201);
 
   function setUser(text: string) {
     setUserName(text);
-  }
-  function setEmail(text: string) {
-    setuserEmail(text);
-  }
-  function setPassword(text: string) {
-    setuserPassword(text);
   }
 
   const onClickButton = (
@@ -42,16 +38,22 @@ const RegisterScreen = ({ navigation }: WelcomeScreenProps) => {
     userHeight: number
   ) => {
     {
-      if (userName == "" || userEmail == "" || userPassword == "") {
-        window.alert("Por favor , rellene los campos necesarios");
+      if (
+        userName.trim() == "" ||
+        userEmail.trim() == "" ||
+        userPassword.trim() == "" ||
+        !userHeight ||
+        !userWeight
+      ) {
+        window.alert("Please, fill in the required fields");
       } else if (validateEmail(userEmail)) {
         registerUser(userName, userEmail, userPassword, userHeight, userWeight)
           .then((status) => {
             if (status == 400) {
-              window.alert("Error : no se a podido registrar el usuario");
+              window.alert("Error : user could not be registered");
               return null;
             } else {
-              window.alert("Registro exitoso");
+              window.alert("Successful registration");
               navigation.navigate("Login");
             }
           })
@@ -65,10 +67,10 @@ const RegisterScreen = ({ navigation }: WelcomeScreenProps) => {
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require("../assets/images/Fondo_Olympus_Client.png")}
+        source={OLYMPUS_CLIENT_BACKGROUND_IMAGE}
         style={styles.image}
       >
-        <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
+        <View style={{ ...styles.boxShadow, ...styles.registerContainer }}>
           <Text style={styles.description}>
             Oh , you don't have an account?
           </Text>
@@ -79,12 +81,12 @@ const RegisterScreen = ({ navigation }: WelcomeScreenProps) => {
             style={styles.inputStyle}
           ></TextInput>
           <TextInput
-            onChangeText={(text) => setEmail(text)}
+            onChangeText={(text) => setuserEmail(text)}
             placeholder="Email address..."
             style={styles.inputStyle}
           ></TextInput>
           <TextInput
-            onChangeText={(text) => setPassword(text)}
+            onChangeText={(text) => setuserPassword(text)}
             placeholder="Password..."
             style={styles.inputStyle}
             secureTextEntry={true}
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingLeft: 10,
   },
-  welcomeContainer: {
+  registerContainer: {
     width: 300,
     height: 600,
     alignItems: "center",
@@ -169,16 +171,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: AppColors.darkGreen,
-  },
-  login: {
-    marginTop: 10,
-    marginBottom: 15,
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 15,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: AppColors.green,
   },
   boxShadow: {
     shadowColor: "black",

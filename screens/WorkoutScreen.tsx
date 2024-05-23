@@ -12,18 +12,18 @@ import { RoutineContext } from "../context/RoutineContext";
 import { ExerciseContext } from "../context/ExerciseContext";
 import { Ionicons } from "@expo/vector-icons";
 import appColors from "../assets/styles/appColors";
+import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
-type MuscleScreenProps = {
+type WorkoutScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
-const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
+const WorkoutScreen = ({ navigation }: WorkoutScreenProps) => {
   const [exercises, setExercises] = React.useState<ExerciseInterface[]>([]);
   const { routineId, setRoutineId, routineName } =
     React.useContext(RoutineContext);
-  const { exerciseId, setExerciseId } = React.useContext(ExerciseContext);
+  const { setExerciseId } = React.useContext(ExerciseContext);
   const loadExercises = async () => {
     const recievedExercises = await getExercisesByWorkout(routineId);
-
     if (recievedExercises) {
       setExercises(recievedExercises);
     }
@@ -52,11 +52,11 @@ const WorkoutScreen = ({ navigation }: MuscleScreenProps) => {
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require("./../assets/images/Fondo_Olympus_Client.png")}
+        source={OLYMPUS_CLIENT_BACKGROUND_IMAGE}
         style={styles.image}
       >
-        <Text style={styles.welcomeTitle}>Your Workout {routineName}</Text>
-        <View style={{ ...styles.boxShadow, ...styles.welcomeContainer }}>
+        <Text style={styles.yourWorkoutTitle}>Your Workout {routineName}</Text>
+        <View style={{ ...styles.boxShadow, ...styles.workoutContainer }}>
           <TouchableOpacity style={styles.add} onPress={() => addExercise()}>
             <Ionicons
               name="add-circle-outline"
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  welcomeTitle: {
+  yourWorkoutTitle: {
     fontWeight: "700",
     fontSize: 45,
     textAlign: "center",
@@ -126,20 +126,7 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 6, height: 6 },
     textShadowRadius: 5,
   },
-  description: {
-    fontSize: 30,
-    fontWeight: "700",
-    textAlign: "center",
-    marginBottom: 30,
-  },
-  inputStyle: {
-    width: 250,
-    height: 50,
-    backgroundColor: AppColors.limeGreen,
-    borderRadius: 10,
-    marginTop: 20,
-  },
-  welcomeContainer: {
+  workoutContainer: {
     width: 300,
     height: 500,
     alignItems: "center",
@@ -187,16 +174,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: 250,
     flexDirection: "row",
-  },
-  login: {
-    marginTop: 10,
-    marginBottom: 15,
-    borderColor: "white",
-    borderWidth: 2,
-    borderRadius: 15,
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    backgroundColor: AppColors.darkGreen,
   },
   boxShadow: {
     shadowColor: "black",

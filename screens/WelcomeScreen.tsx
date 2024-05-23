@@ -3,6 +3,7 @@ import React from "react";
 import AppColors from "../assets/styles/appColors";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
 type WelcomeScreenProps = {
   navigation: NavigationProp<ParamListBase>;
@@ -11,7 +12,7 @@ const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require("./../assets/images/Fondo_Olympus_Client.png")}
+        source={OLYMPUS_CLIENT_BACKGROUND_IMAGE}
         style={styles.image}
       >
         <Text style={styles.welcomeTitle}>WELCOME TO OLYMPUS</Text>

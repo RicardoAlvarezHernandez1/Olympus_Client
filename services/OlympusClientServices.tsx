@@ -2,9 +2,9 @@ import { RoutineInterface } from "../assets/interfaces/RoutineInterface";
 import { MuscleZoneInterface } from "../assets/interfaces/MuscleZoneInterface";
 import { ExerciseInterface } from "../assets/interfaces/ExerciseInterface";
 import { AchievementInterface } from "../assets/interfaces/AchievementInterface";
+import { IPDIRECTION } from "../constants/global.const";
 
 const REGISTRATION_PATH = "/user";
-const IPDIRECTION = "192.168.11.39";
 const API_URL = `http://${IPDIRECTION}:8082/olympus/v1`;
 
 export const registerUser = async (
