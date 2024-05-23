@@ -4,7 +4,7 @@ import { ExerciseInterface } from "../assets/interfaces/ExerciseInterface";
 import { AchievementInterface } from "../assets/interfaces/AchievementInterface";
 
 const REGISTRATION_PATH = "/user";
-const IPDIRECTION = "192.168.1.33";
+const IPDIRECTION = "192.168.11.39";
 const API_URL = `http://${IPDIRECTION}:8082/olympus/v1`;
 
 export const registerUser = async (

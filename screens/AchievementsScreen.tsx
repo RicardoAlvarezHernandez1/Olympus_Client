@@ -22,16 +22,16 @@ const AchievementScreen = () => {
   };
 
   const imageMap = {
-    "1": require("../assets/images/achievement1.png"),
-    "2": require("../assets/images/achievement2.png"),
-    "3": require("../assets/images/achievement3.png"),
-    "4": require("../assets/images/achievement4.png"),
-    "5": require("../assets/images/achievement5.png"),
-    "6": require("../assets/images/achievement6.png"),
-    "7": require("../assets/images/achievement7.png"),
-    "8": require("../assets/images/achievement8.png"),
-    "9": require("../assets/images/achievement9.png"),
-    "10": require("../assets/images/achievement10.png"),
+    "Complete 10 workouts in a month": require("../assets/images/achievement1.png"),
+    "Lift 1000 pounds in total": require("../assets/images/achievement2.png"),
+    "Run 10 miles in a week": require("../assets/images/achievement3.png"),
+    "Attend 20 group classes": require("../assets/images/achievement4.png"),
+    "Do 50 push-ups in a row": require("../assets/images/achievement5.png"),
+    "Complete a marathon (100 km)": require("../assets/images/achievement6.png"),
+    "Do 30 bicep curls in a row": require("../assets/images/achievement7.png"),
+    "Reach a body fat percentage of 15%": require("../assets/images/achievement8.png"),
+    "Bench press your body weight": require("../assets/images/achievement9.png"),
+    "Complete 1000 squats in a month": require("../assets/images/achievement10.png"),
   };
 
   React.useEffect(() => {
@@ -63,7 +63,7 @@ const AchievementScreen = () => {
               >
                 <View>
                   <Image
-                    source={imageMap[achievement.achievementId]}
+                    source={imageMap[achievement.achievementDescription]}
                     style={styles.icons}
                   />
                 </View>
