@@ -8,6 +8,7 @@ import MuscleProvider from "./providers/MuscleProvider";
 import RoutineProvider from "./providers/RoutineProvider";
 import ExerciseProvider from "./providers/ExerciseProvider";
 
+// Main Component for the app
 export default function App() {
   return (
     <View style={styles.appContainer}>
@@ -26,6 +27,7 @@ export default function App() {
   );
 }
 
+// Styles for the main component
 const styles = StyleSheet.create({
   appContainer: {
     flex: 1,

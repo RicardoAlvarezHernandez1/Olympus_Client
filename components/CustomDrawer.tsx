@@ -20,29 +20,31 @@ import ExercisesScreen from "../screens/ExercisesScreen";
 import NewsScreen from "../screens/NewsScreen";
 import AchievementScreen from "../screens/AchievementsScreen";
 
-const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator(); // Creating a Drawer Navigator
 
 const CustomDrawer = () => {
-  const { isLogged, toggleIsLogged } = React.useContext(UserContext);
+  const { isLogged } = React.useContext(UserContext); // Using UserContext for user authentication
 
+  // Options for drawer navigation
   const drawerNavigatorScreenOptions: DrawerNavigationOptions = {
-    headerTitle: "OLYMPUS",
-    headerTitleAlign: "center",
+    headerTitle: "OLYMPUS", // Title for the header
+    headerTitleAlign: "center", // Aligning header title to center
     headerStyle: {
-      backgroundColor: appColors.lightGreen,
+      backgroundColor: appColors.lightGreen, // Setting header background color
     },
-    headerTintColor: "black",
+    headerTintColor: "black", // Setting header text color
     drawerItemStyle: {
-      width: "100%",
+      width: "100%", // Setting drawer item width
     },
-    drawerActiveTintColor: "darkblue",
-    drawerActiveBackgroundColor: appColors.green,
-    drawerInactiveTintColor: "black",
-    drawerInactiveBackgroundColor: appColors.greenishWhite,
-    drawerType: "front",
+    drawerActiveTintColor: "darkblue", // Setting active item text color
+    drawerActiveBackgroundColor: appColors.green, // Setting active item background color
+    drawerInactiveTintColor: "black", // Setting inactive item text color
+    drawerInactiveBackgroundColor: appColors.greenishWhite, // Setting inactive item background color
+    drawerType: "front", // Setting drawer type
   };
 
   return (
+    // Depending on whether you are logged in or not, the necessary screens will be displayed.
     <>
       {isLogged ? (
         <>
@@ -175,4 +177,4 @@ const CustomDrawer = () => {
   );
 };
 
-export default CustomDrawer;
+export default CustomDrawer; // Exporting CustomDrawer component

@@ -13,15 +13,26 @@ import { UserContext } from "../context/UserContext";
 import { loginUser } from "../services/OlympusClientServices";
 import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
+// Define props for the component
 type LoginScreenProps = {
-  navigation: NavigationProp<ParamListBase>;
+  navigation: NavigationProp<ParamListBase>; // Navigation prop for navigation
 };
 const LoginScreen = ({ navigation }: LoginScreenProps) => {
+  // Destructuring context values
   const { toggleIsLogged } = React.useContext(UserContext);
   const { setUserName, setId } = React.useContext(UserContext);
+
+  // State hooks for email and password input
   const [mail, setMail] = React.useState("");
   const [userPassword, setuserPassword] = React.useState("");
 
+  // Function to handle the login button click
+  /**
+   * Handle the login button click.
+   * Validates the email and password fields, calls the loginUser service,
+   * and updates the context state if login is successful.
+   * @returns void
+   */
   const onClickButton = () => {
     const email: string = mail;
     const password: string = userPassword;
@@ -56,6 +67,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
     }
   };
 
+  //LoginScreen component
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -88,8 +100,9 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
   );
 };
 
+// Export the component
 export default LoginScreen;
-
+// Styles for the component
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 20,

@@ -12,14 +12,21 @@ import { ExerciseInterface } from "../assets/interfaces/ExerciseInterface";
 import { RoutineContext } from "../context/RoutineContext";
 import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
+// Define the props for the ExerciseScreen component
 type ExerciseScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
+
+// Exercises component
 const ExerciseScreen = ({ navigation }: ExerciseScreenProps) => {
+  // State to hold the exercises for the selected muscle zone
   const [exercises, setExercises] = React.useState<ExerciseInterface[]>([]);
+  // Retrieve the muscle zone ID and name from the MuscleContext
   const { muscleZoneId, muscleName } = React.useContext(MuscleContext);
+  // Retrieve the routine ID from the RoutineContext
   const { routineId } = React.useContext(RoutineContext);
 
+  // Function to load exercises for the selected muscle zone
   const loadExercises = async () => {
     const receivedExercises = await getExercisesByMuscleZone(muscleZoneId);
     if (receivedExercises) {
@@ -27,10 +34,17 @@ const ExerciseScreen = ({ navigation }: ExerciseScreenProps) => {
     }
   };
 
+  // Load exercises when the muscle zone ID changes
   React.useEffect(() => {
     loadExercises();
   }, [muscleZoneId]);
 
+  // Function to handle the button click to add exercise to routine
+  /**
+   * Add an exercise to the current workout routine.
+   * @param id - ID of the exercise.
+   * @param name - Name of the exercise.
+   */
   const onClickButton = (id: number, name: string) => {
     addExerciseToRoutine(id, routineId)
       .then((status) => {
@@ -43,6 +57,8 @@ const ExerciseScreen = ({ navigation }: ExerciseScreenProps) => {
       })
       .catch((err) => console.log(err));
   };
+
+  // Return Exercises
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -84,8 +100,10 @@ const ExerciseScreen = ({ navigation }: ExerciseScreenProps) => {
   );
 };
 
+// Export the component
 export default ExerciseScreen;
 
+// Styles for the Exercises component
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 20,

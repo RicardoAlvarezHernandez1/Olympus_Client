@@ -7,13 +7,16 @@ import { UserContext } from "../context/UserContext";
 import appColors from "../assets/styles/appColors";
 import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
+// Define the props for MainScreen component
 type MainScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
-
+// MainScreen component
 const MainScreen = ({ navigation }: MainScreenProps) => {
+  // Retrieve user context
   const { user } = React.useContext(UserContext);
 
+  // Return MainScreen
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -56,8 +59,10 @@ const MainScreen = ({ navigation }: MainScreenProps) => {
   );
 };
 
+// Export the component
 export default MainScreen;
 
+// Styles for the MainScreen component
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,

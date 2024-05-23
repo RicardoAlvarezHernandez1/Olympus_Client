@@ -15,13 +15,23 @@ import { RoutineContext } from "../context/RoutineContext";
 import appColors from "../assets/styles/appColors";
 import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
+// Define the props for the RoutineScreen component
 type RoutineScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
+
+// RoutineScreen component
 const RoutineScreen = ({ navigation }: RoutineScreenProps) => {
+  // State to hold the list of routines
   const [routines, setRoutines] = React.useState<RoutineInterface[]>([]);
+  // Retrieve user and routine context
   const { userId } = React.useContext(UserContext);
   const { setRoutineId, setRoutineName } = React.useContext(RoutineContext);
+
+  // Function to load the user's routines
+  /**
+   * Load the routines for the current user.
+   */
   const loadRoutines = async () => {
     const recievedUsers = await getUserRoutines(userId);
     if (recievedUsers != null) {
@@ -29,27 +39,45 @@ const RoutineScreen = ({ navigation }: RoutineScreenProps) => {
     }
   };
 
+  // UseFocusEffect to load routines when the screen is focused
   useFocusEffect(
     useCallback(() => {
       loadRoutines();
     }, [])
   );
 
+  // UseEffect to load routines on component mount
   React.useEffect(() => {
     loadRoutines();
   }, []);
 
+  // Function to handle the add button click
+  /**
+   * Navigate to the CreateWorkout screen and set a new routine ID.
+   */
   const onclickButton = async () => {
     setRoutineId(routines.length + 1);
     navigation.navigate("CreateWorkout");
   };
 
+  // Function to handle routine item click
+  /**
+   * Navigate to the Workout screen and set the routine ID and name.
+   * @param id - ID of the routine.
+   * @param name - Name of the routine.
+   */
   const onclickRoutine = async (id: number, name: string) => {
     setRoutineId(id);
     setRoutineName(name);
     navigation.navigate("Workout");
   };
 
+  // Function to handle routine removal
+  /**
+   * Confirm and remove the selected routine.
+   * @param id - ID of the routine to be removed.
+   * @param name - Name of the routine to be removed.
+   */
   const onclickRemove = async (id: number, name: string) => {
     {
       Alert.alert(
@@ -81,6 +109,7 @@ const RoutineScreen = ({ navigation }: RoutineScreenProps) => {
     }
   };
 
+  // Return RoutineScreen
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -128,8 +157,9 @@ const RoutineScreen = ({ navigation }: RoutineScreenProps) => {
   );
 };
 
+// Export the component
 export default RoutineScreen;
-
+// Styles for the RoutineScreen component
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 20,

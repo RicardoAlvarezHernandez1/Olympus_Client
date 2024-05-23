@@ -14,14 +14,21 @@ import { Ionicons } from "@expo/vector-icons";
 import appColors from "../assets/styles/appColors";
 import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
+// Define the props for the WorkoutScreen component
 type WorkoutScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
+
+// WorkoutScreen component
 const WorkoutScreen = ({ navigation }: WorkoutScreenProps) => {
+  // State to hold exercises
   const [exercises, setExercises] = React.useState<ExerciseInterface[]>([]);
+  // Retrieve routine id, routine name, and set routine id from RoutineContext
   const { routineId, setRoutineId, routineName } =
     React.useContext(RoutineContext);
+  // Retrieve exercise id from ExerciseContext
   const { setExerciseId } = React.useContext(ExerciseContext);
+  // Function to load exercises
   const loadExercises = async () => {
     const recievedExercises = await getExercisesByWorkout(routineId);
     if (recievedExercises) {
@@ -29,26 +36,31 @@ const WorkoutScreen = ({ navigation }: WorkoutScreenProps) => {
     }
   };
 
+  // Load exercises on component mount
   React.useEffect(() => {
     loadExercises();
   }, [exercises]);
 
+  // Function to handle button click to view exercise details
   const onClickButton = (id: number) => {
     setExerciseId(id);
     navigation.navigate("Exercise");
   };
 
+  // Function to add exercise
   const addExercise = () => {
     setRoutineId(routineId);
     navigation.navigate("Muscles");
   };
 
+  // Function to remove exercise
   const removeExercise = (id: number) => {
     removeExerciseFromRoutine(id, routineId);
     loadExercises();
     window.alert("Exercise deleted successfully");
   };
 
+  // Return WorkoutScreen
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -100,8 +112,10 @@ const WorkoutScreen = ({ navigation }: WorkoutScreenProps) => {
   );
 };
 
+// Export the component
 export default WorkoutScreen;
 
+// Styles for the WorkoutScreen component
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 20,

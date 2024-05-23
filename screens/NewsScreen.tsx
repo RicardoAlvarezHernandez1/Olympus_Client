@@ -8,14 +8,19 @@ import { getNews } from "../services/OlympusClientServices";
 import { NewsItem } from "../assets/interfaces/NewsInterface";
 import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
+// Definition of the props expected by the NewsScreen component
 type NewsScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
 
+// NewsScreen component
 const NewsScreen = ({ navigation }: NewsScreenProps) => {
+  // State to store the news
   const [news, setNews] = React.useState<NewsItem[]>([]);
 
+  // Function to load news from the service
   const loadNews = async () => {
+    // Call to the service to get the news
     getNews()
       .then((response) => {
         if (!response.ok) {
@@ -27,6 +32,7 @@ const NewsScreen = ({ navigation }: NewsScreenProps) => {
         if (!data || !data.articles) {
           return;
         }
+        // Update state with received news
         setNews(data.articles);
       })
       .catch((error) => {
@@ -34,16 +40,19 @@ const NewsScreen = ({ navigation }: NewsScreenProps) => {
       });
   };
 
+  // Effect to load news when the component is focused
   useFocusEffect(
     useCallback(() => {
       loadNews();
     }, [])
   );
 
+  // Effect to load news when the component is loaded
   React.useEffect(() => {
     loadNews();
   }, []);
 
+  // Component rendering
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -79,8 +88,10 @@ const NewsScreen = ({ navigation }: NewsScreenProps) => {
   );
 };
 
+// Export The component
 export default NewsScreen;
 
+// Styles for the NewsScreen component
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,

@@ -11,9 +11,11 @@ import RoutineScreen from "./RoutineScreen";
 import NewsScreen from "./NewsScreen";
 import AchievementScreen from "./AchievementsScreen";
 
+// Create a bottom tab navigator instance
 const Tab = createBottomTabNavigator();
-
+// Define the Body component
 const Body = () => {
+  // Function to define options for the Home tab
   const HomeTabOptions = (): BottomTabNavigationOptions => {
     return {
       tabBarIcon: () => (
@@ -22,6 +24,7 @@ const Body = () => {
     };
   };
 
+  // Function to define options for the Routines tab
   const RoutinesTabOptions = (): BottomTabNavigationOptions => {
     return {
       tabBarIcon: () => (
@@ -33,6 +36,8 @@ const Body = () => {
       ),
     };
   };
+
+  // Function to define options for the News tab
   const NewsTabOptions = (): BottomTabNavigationOptions => {
     return {
       tabBarIcon: () => (
@@ -44,6 +49,8 @@ const Body = () => {
       ),
     };
   };
+
+  // Function to define options for the Achievements tab
   const AchievementsTabOptions = (): BottomTabNavigationOptions => {
     return {
       tabBarIcon: () => (
@@ -55,6 +62,8 @@ const Body = () => {
       ),
     };
   };
+
+  // Common options for all tabs
   const tabNavigatorScreenOptions: BottomTabNavigationOptions = {
     headerShown: false,
     tabBarInactiveTintColor: appColors.darkGreen,
@@ -64,7 +73,7 @@ const Body = () => {
       backgroundColor: appColors.black,
     },
   };
-
+  // Component rendering
   return (
     <View style={styles.appBody}>
       <Tab.Navigator screenOptions={tabNavigatorScreenOptions}>
@@ -93,8 +102,10 @@ const Body = () => {
   );
 };
 
+// Export the component
 export default Body;
 
+// Styles for the Tab component
 const styles = StyleSheet.create({
   appBody: {
     flex: 20,

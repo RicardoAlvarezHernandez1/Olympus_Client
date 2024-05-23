@@ -16,20 +16,33 @@ import {
   validateEmail,
 } from "../constants/global.const";
 
+// Define props for the component
 type RegisterScreenProps = {
-  navigation: NavigationProp<ParamListBase>;
+  navigation: NavigationProp<ParamListBase>; // Navigation prop for navigation
 };
 const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
-  const { user, setUserName } = React.useContext(UserContext);
-  const [userEmail, setuserEmail] = React.useState("");
-  const [userPassword, setuserPassword] = React.useState("");
-  const [userWeight, setUserWeight] = React.useState(0);
-  const [userHeight, setUserHeight] = React.useState(0);
+  const { user, setUserName } = React.useContext(UserContext); // Accessing user context
+  const [userEmail, setuserEmail] = React.useState(""); // State for email
+  const [userPassword, setuserPassword] = React.useState(""); // State for password
+  const [userWeight, setUserWeight] = React.useState(0); // State for weight
+  const [userHeight, setUserHeight] = React.useState(0); // State for height
 
+  /**
+   * Set the user's name.
+   * @param text - The name of the user to set.
+   */
   function setUser(text: string) {
     setUserName(text);
   }
 
+  /**
+   * Handle the registration button click.
+   * @param userName - The user's name.
+   * @param userEmail - The user's email address.
+   * @param userPassword - The user's password.
+   * @param userWeight - The user's weight.
+   * @param userHeight - The user's height.
+   */
   const onClickButton = (
     userName: string,
     userEmail: string,
@@ -38,6 +51,7 @@ const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
     userHeight: number
   ) => {
     {
+      // Validate input fields
       if (
         userName.trim() == "" ||
         userEmail.trim() == "" ||
@@ -47,6 +61,7 @@ const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
       ) {
         window.alert("Please, fill in the required fields");
       } else if (validateEmail(userEmail)) {
+        // Call registration service
         registerUser(userName, userEmail, userPassword, userHeight, userWeight)
           .then((status) => {
             if (status == 400) {
@@ -64,6 +79,7 @@ const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
     }
   };
 
+  //RegisterScreen component
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -123,8 +139,10 @@ const RegisterScreen = ({ navigation }: RegisterScreenProps) => {
   );
 };
 
+// Export the component
 export default RegisterScreen;
 
+// Styles for the component
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 20,

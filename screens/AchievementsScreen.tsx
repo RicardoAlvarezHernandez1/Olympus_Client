@@ -8,12 +8,14 @@ import { AchievementInterface } from "../assets/interfaces/AchievementInterface"
 import { UserContext } from "../context/UserContext";
 import appColors from "../assets/styles/appColors";
 
+// AchievementScreen Component
 const AchievementScreen = () => {
   const [achievements, setAchievements] = React.useState<
     AchievementInterface[]
   >([]);
   const { userId } = React.useContext(UserContext);
 
+  // Function to load achievements for the user
   const loadAchievements = async () => {
     const receivedAchievements = await getAchievementsByUser(userId);
     if (receivedAchievements) {
@@ -21,6 +23,7 @@ const AchievementScreen = () => {
     }
   };
 
+  // Define mapping for achievement descriptions to their respective images
   const imageMap = {
     "Complete 10 workouts in a month": require("../assets/images/achievement1.png"),
     "Lift 1000 pounds in total": require("../assets/images/achievement2.png"),
@@ -34,15 +37,19 @@ const AchievementScreen = () => {
     "Complete 1000 squats in a month": require("../assets/images/achievement10.png"),
   };
 
+  // Load achievements when component is focused
   React.useEffect(() => {
     loadAchievements();
   }, [userId]);
 
+  // Load achievements when user ID changes
   useFocusEffect(
     useCallback(() => {
       loadAchievements();
     }, [])
   );
+
+  // Return AchievementsScreen
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -79,8 +86,10 @@ const AchievementScreen = () => {
   );
 };
 
+// Export the component
 export default AchievementScreen;
 
+// Styles for the AchievementsScreen component
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 20,

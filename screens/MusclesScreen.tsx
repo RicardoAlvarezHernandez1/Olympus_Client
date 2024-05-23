@@ -8,15 +8,21 @@ import { MuscleZoneInterface } from "../assets/interfaces/MuscleZoneInterface";
 import { MuscleContext } from "../context/MuscleContext";
 import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
+// Define the props for the MusclesScreen component
 type MuscleScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
+
+// MusclesScreen component
 const MusclesScreen = ({ navigation }: MuscleScreenProps) => {
+  // State to hold muscle zones
   const [muscleZones, setMuscleZones] = React.useState<MuscleZoneInterface[]>(
     []
   );
+  // Retrieve muscle zone id and name from MuscleContext
   const { setMuscleZoneId, setMuscleName } = React.useContext(MuscleContext);
 
+  // Function to load muscle zones
   const loadMuscleZones = async () => {
     const recievedUsers = await getMusclesZones();
     if (recievedUsers != null) {
@@ -24,16 +30,21 @@ const MusclesScreen = ({ navigation }: MuscleScreenProps) => {
     }
   };
 
+  // Load muscle zones on component mount
   React.useEffect(() => {
     loadMuscleZones();
   }, []);
 
+  // Function to handle button click
   const onClickButton = (id: number, name: string) => {
+    // Set muscle zone id and name in MuscleContext
     setMuscleZoneId(id);
     setMuscleName(name);
+    // Navigate to Exercises screen
     navigation.navigate("Exercises");
   };
 
+  // Return MusclesScreen
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -69,8 +80,9 @@ const MusclesScreen = ({ navigation }: MuscleScreenProps) => {
   );
 };
 
+// Export the component
 export default MusclesScreen;
-
+// Styles for the MusclesScreen component
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 20,

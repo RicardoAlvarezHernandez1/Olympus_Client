@@ -8,16 +8,23 @@ import { RoutineContext } from "../context/RoutineContext";
 import { ExerciseContext } from "../context/ExerciseContext";
 import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
+// Define the props for the ExercisesScreen component
 type ExerciseScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
+
+// ExerciseScreen component
 const ExercisesScreen = ({ navigation }: ExerciseScreenProps) => {
+  // Retrieve exerciseId from ExerciseContext
   const { exerciseId } = React.useContext(ExerciseContext);
+  // Retrieve routineName from RoutineContext
   const { routineName } = React.useContext(RoutineContext);
+  // State to hold exercise details
   const [exerciseName, setExerciseName] = React.useState("");
   const [exerciseDescription, setExerciseDescription] = React.useState("");
   const [urlImage, setUrlImage] = React.useState("");
 
+  // Function to load exercise details
   const loadExercise = async () => {
     getExercisesById(exerciseId).then((data) => {
       setExerciseName(data.exerciseName);
@@ -26,10 +33,12 @@ const ExercisesScreen = ({ navigation }: ExerciseScreenProps) => {
     });
   };
 
+  // Load exercise details when exerciseId changes
   React.useEffect(() => {
     loadExercise();
   }, [exerciseId]);
 
+  // Return ExercisesScreen
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -67,8 +76,10 @@ const ExercisesScreen = ({ navigation }: ExerciseScreenProps) => {
   );
 };
 
+// Export the component
 export default ExercisesScreen;
 
+// Styles for the ExercisesScreen component
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 20,

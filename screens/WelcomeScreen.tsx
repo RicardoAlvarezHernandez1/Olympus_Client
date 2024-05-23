@@ -5,9 +5,12 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
+// Define type for props
 type WelcomeScreenProps = {
-  navigation: NavigationProp<ParamListBase>;
+  navigation: NavigationProp<ParamListBase>; // Navigation prop
 };
+
+// WelcomeScreen component
 const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
   return (
     <View style={styles.mainContainer}>
@@ -36,8 +39,9 @@ const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
   );
 };
 
-export default WelcomeScreen;
+export default WelcomeScreen; // Export the WelcomeScreen component
 
+// Styles for the WelcomeScreen component
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 20,

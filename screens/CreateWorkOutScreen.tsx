@@ -13,13 +13,23 @@ import { UserContext } from "../context/UserContext";
 import { newRoutine } from "../services/OlympusClientServices";
 import { OLYMPUS_CLIENT_BACKGROUND_IMAGE } from "../constants/global.const";
 
+// Define the props for the CreateWorkOutScreen component
 type CreateWorkoutScreenProps = {
   navigation: NavigationProp<ParamListBase>;
 };
+
+// CreateWorkOutScreen component
 const CreateWorkOutScreen = ({ navigation }: CreateWorkoutScreenProps) => {
+  // State to hold the routine name
   const [routineName, setRoutineName] = React.useState("");
+  // Retrieve the user ID from the UserContext
   const { userId } = React.useContext(UserContext);
 
+  // Function to handle the create button click
+  /**
+   * Validate the input and create a new routine.
+   * If successful, navigate to the Routines screen.
+   */
   const onClickButton = () => {
     if (routineName.trim() == "") {
       window.alert("Please fill in the required fields");
@@ -37,6 +47,7 @@ const CreateWorkOutScreen = ({ navigation }: CreateWorkoutScreenProps) => {
     }
   };
 
+  // Return CreateWorkoutScreen
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -68,8 +79,10 @@ const CreateWorkOutScreen = ({ navigation }: CreateWorkoutScreenProps) => {
   );
 };
 
+// Export the Component
 export default CreateWorkOutScreen;
 
+// Styles for the CreateWorkOutScreen component
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 20,
